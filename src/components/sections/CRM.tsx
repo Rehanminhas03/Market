@@ -700,10 +700,10 @@ export default function CRM() {
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-[#d5b367]/20" />
                         <div className="flex-1">
-                          <p className="text-sm text-white font-medium">{lead.name}</p>
-                          <p className="text-xs text-white/50">{lead.status}</p>
+                          <p className="text-sm text-white font-medium">{client.name}</p>
+                          <p className="text-xs text-white/50">{client.status}</p>
                         </div>
-                        <span className="text-xs text-white/30">{lead.time}</span>
+                        <span className="text-xs text-white/30">{client.time}</span>
                       </div>
                     </div>
                   ))}
