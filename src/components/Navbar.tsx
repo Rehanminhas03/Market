@@ -19,7 +19,6 @@ const navItems = [
   { name: "Benefits", link: "/#benefits" },
   { name: "Services", link: "/#services" },
   { name: "CRM", link: "/#crm" },
-  { name: "SEO Agent Profile", link: "/agent-profile" },
   { name: "FAQ", link: "/#faq" },
 ];
 

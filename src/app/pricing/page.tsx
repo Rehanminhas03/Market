@@ -201,6 +201,7 @@ const soloPlans = [
       "PPC Advertising Management",
       "Email Marketing Automation",
       "Detailed Analytics Dashboard",
+      "Exclusive Schedule Appointment",
       "Priority Support",
     ],
     tag: "Most Popular",
