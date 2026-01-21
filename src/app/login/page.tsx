@@ -13,8 +13,8 @@ import {
 } from "@tabler/icons-react";
 
 // Hardcoded credentials
-const VALID_USERNAME = "admin";
-const VALID_PASSWORD = "marketlyn2026@";
+const VALID_USERNAME = "guest";
+const VALID_PASSWORD = "marketlyn123";
 
 export default function LoginPage() {
   const router = useRouter();
