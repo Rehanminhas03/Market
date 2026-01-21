@@ -7,11 +7,11 @@ import MagneticButton from "@/components/ui/magnetic-button";
 import siteConfig from "@/config/site.json";
 import Image from "next/image";
 
-// Partner logos for the marquee
-const partnerLogos = [
+// Brokerage logos for the marquee
+const brokerageLogos = [
   { name: "Partner 1", logo: "/logos/1.png", scale: 1, keepColor: false },
   { name: "Partner 2", logo: "/logos/2.png", scale: 1, keepColor: false },
-  { name: "Partner 3", logo: "/logos/33.png", scale: 1, keepColor: true },
+  { name: "Zillow", logo: "/logos/33.png", scale: 1, keepColor: true },
   { name: "Partner 4", logo: "/logos/4.png", scale: 1, keepColor: false },
   { name: "Partner 5", logo: "/logos/5.png", scale: 1, keepColor: false },
   { name: "Partner 6", logo: "/logos/6.png", scale: 1.1, keepColor: false },
@@ -115,10 +115,10 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <span className="block">Marketing</span>
-              <span className="block">Without The</span>
+              <span className="block">Close More</span>
+              <span className="block">Deals With</span>
               <span className="block bg-gradient-to-r from-[#d5b367] via-[#e8d5a3] to-[#d5b367] bg-clip-text text-transparent">
-                Hassle.
+                Quality Leads.
               </span>
             </motion.h1>
 
@@ -129,8 +129,8 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              With our AI-driven marketing platform, you can accelerate your growth
-              with data-driven strategies. Scale your business effortlessly.
+              Get exclusive, intent-verified buyer and seller leads delivered directly to you.
+              Grow your real estate business with qualified prospects ready to transact.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -159,41 +159,41 @@ export default function Hero() {
         >
           <div className="w-full md:w-[60%] mx-auto px-0">
             <p className="text-sm text-white/50 font-semibold text-center mb-8 uppercase tracking-widest">
-              Trusted by businesses across industries
+              Trusted by agents at leading brokerages
             </p>
 
             {/* Logo Images Marquee */}
             <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_10%,black_90%,transparent_100%)]">
               <div className="flex w-max animate-marquee">
                 {/* First set of logos */}
-                {partnerLogos.map((partner, idx) => (
+                {brokerageLogos.map((brokerage, idx) => (
                   <div
                     key={`first-${idx}`}
                     className="relative h-12 w-24 md:h-12 md:w-36 mx-4 md:mx-6 opacity-70 hover:opacity-100 transition-opacity flex-shrink-0"
                   >
                     <Image
-                      src={partner.logo}
-                      alt={partner.name}
+                      src={brokerage.logo}
+                      alt={brokerage.name}
                       fill
-                      className={`object-contain ${partner.keepColor ? "" : "[filter:brightness(0)_invert(1)]"}`}
+                      className={`object-contain ${brokerage.keepColor ? "" : "[filter:brightness(0)_invert(1)]"}`}
                       sizes="(max-width: 768px) 96px, 150px"
-                      style={{ transform: `scale(${partner.scale})` }}
+                      style={{ transform: `scale(${brokerage.scale})` }}
                     />
                   </div>
                 ))}
                 {/* Duplicate set for seamless loop */}
-                {partnerLogos.map((partner, idx) => (
+                {brokerageLogos.map((brokerage, idx) => (
                   <div
                     key={`second-${idx}`}
                     className="relative h-12 w-24 md:h-12 md:w-36 mx-4 md:mx-6 opacity-70 hover:opacity-100 transition-opacity flex-shrink-0"
                   >
                     <Image
-                      src={partner.logo}
-                      alt={partner.name}
+                      src={brokerage.logo}
+                      alt={brokerage.name}
                       fill
-                      className={`object-contain ${partner.keepColor ? "" : "[filter:brightness(0)_invert(1)]"}`}
+                      className={`object-contain ${brokerage.keepColor ? "" : "[filter:brightness(0)_invert(1)]"}`}
                       sizes="(max-width: 768px) 96px, 150px"
-                      style={{ transform: `scale(${partner.scale})` }}
+                      style={{ transform: `scale(${brokerage.scale})` }}
                     />
                   </div>
                 ))}

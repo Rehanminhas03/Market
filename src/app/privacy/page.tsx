@@ -18,11 +18,11 @@ const sections = [
       },
       {
         title: "Business and Professional Information",
-        content: "Company details, industry information, service areas, business preferences, and onboarding details provided by business clients."
+        content: "Company details, MLS ID, service areas, business preferences, and onboarding details provided by realtors or business clients."
       },
       {
-        title: "Marketing and Campaign Information",
-        content: "Campaign preferences, target audience details, marketing goals, and interaction data."
+        title: "Lead and Property Information",
+        content: "Property address, buyer or seller intent, inquiry details, and lead interaction data."
       },
       {
         title: "Communication Data",
@@ -38,7 +38,7 @@ const sections = [
     title: "How We Use Information",
     content: "We use collected information to operate and improve our services.",
     list: [
-      "To provide digital marketing, campaign management, appointment booking, and CRM services.",
+      "To provide digital marketing, lead generation, lead nurturing, appointment booking, and CRM services.",
       "To communicate with clients, prospects, and partners.",
       "To process payments, subscriptions, and billing.",
       "To verify accounts and comply with legal and financial requirements.",
@@ -60,7 +60,7 @@ const sections = [
     content: "We do not sell or rent personal information.",
     paragraphs: [
       "We may share information with trusted third party service providers who help us operate our business. These include payment processors, CRM platforms, SMS and email providers, hosting services, analytics tools, and customer support systems.",
-      "Campaign data and results generated for clients are exclusive to the client for whom they were generated unless otherwise agreed in writing.",
+      "Leads generated for clients are exclusive to the client for whom they were generated unless otherwise agreed in writing.",
       "We may disclose information if required by law, regulation, court order, or lawful request."
     ]
   },

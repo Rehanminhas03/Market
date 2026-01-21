@@ -17,7 +17,7 @@ const termsContent = [
   {
     title: "2. Description of Services",
     content:
-      "We provide digital marketing, campaign management, CRM access, SMS and email campaign facilitation, appointment booking tools, and related services. All services are provided on a best-effort basis. Results are not guaranteed, including conversions, appointments, revenue, or profits.",
+      "We provide marketing, lead generation, CRM access, SMS and email campaign facilitation, appointment booking tools, and related services. All services are provided on a best-effort basis. Results are not guaranteed, including leads, conversions, appointments, revenue, or profits.",
   },
   {
     title: "3. Prohibited Activities",
@@ -27,7 +27,7 @@ const termsContent = [
       "Fraud or misrepresentation",
       "Spam, phishing, or unlawful communications",
       "Excessive, abusive, or unjustified chargebacks",
-      "Unauthorized resale or redistribution of marketing materials",
+      "Unauthorized resale or redistribution of leads",
       "Violations of CAN-SPAM, GDPR, CCPA, TCPA, or consumer protection laws",
     ],
     footer:
@@ -39,9 +39,9 @@ const termsContent = [
       "You are responsible for maintaining the confidentiality of your login credentials and for all activity conducted through your account.",
   },
   {
-    title: "5. Content and Campaign Ownership",
+    title: "5. Lead Ownership and Usage",
     content:
-      "Marketing materials and campaigns created through our platform are licensed solely for your authorized business use. Resale, transfer, or misuse of these materials is strictly prohibited.",
+      "Leads generated through our platform are licensed solely for your authorized business use. Resale, transfer, or misuse of leads is strictly prohibited.",
   },
   {
     title: "6. Fees, Billing, and Refunds",

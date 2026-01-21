@@ -15,6 +15,7 @@ const footerLinks = {
   resources: [
     { name: "FAQ", href: "#faq" },
     { name: "CRM", href: "#crm" },
+    { name: "SEO Agent Profile", href: "/agent-profile" },
   ],
   legal: [
     { name: "Privacy Policy", href: "/privacy" },
@@ -208,7 +209,7 @@ export default function Footer() {
             © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
           </p>
           <p className="text-base font-medium text-white/50">
-            AI Powered Digital Marketing Agency
+            AI Powered Digital Marketing Agency for Real Estate
           </p>
         </motion.div>
       </div>

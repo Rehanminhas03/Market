@@ -46,10 +46,10 @@ import {
 import siteConfig from "@/config/site.json";
 
 // Logo data for marquee
-const partnerLogos = [
+const brokerageLogos = [
   { name: "Partner 1", logo: "/logos/1.png", scale: 1, keepColor: false },
   { name: "Partner 2", logo: "/logos/2.png", scale: 1, keepColor: false },
-  { name: "Partner 3", logo: "/logos/33.png", scale: 1, keepColor: true },
+  { name: "Zillow", logo: "/logos/33.png", scale: 1, keepColor: true },
   { name: "Partner 4", logo: "/logos/4.png", scale: 1, keepColor: false },
   { name: "Partner 5", logo: "/logos/5.png", scale: 1, keepColor: false },
   { name: "Partner 6", logo: "/logos/6.png", scale: 1.1, keepColor: false },
@@ -66,23 +66,23 @@ const partnerLogos = [
 const whyChooseFeatures = [
   {
     icon: IconCrown,
-    title: "Custom Strategies",
-    description: "We create tailored marketing strategies designed specifically for your business goals.",
+    title: "Exclusivity Guaranteed",
+    description: "We ensure our Referrals are exclusive to you, never shared with your competitors.",
   },
   {
     icon: IconShieldCheck,
     title: "Quality Assured",
-    description: "Beyond deliverables, we guarantee the quality and effectiveness of every campaign.",
+    description: "Beyond market share, we guarantee the quality of Referrals you've purchased.",
   },
   {
     icon: IconTargetArrow,
-    title: "Precision Targeting",
-    description: "Reach your ideal audience with data-driven campaigns tailored to your market.",
+    title: "Targeted Locally",
+    description: "Dominate your local market with Referrals tailored to your preferred areas.",
   },
   {
     icon: IconUsers,
-    title: "Expert Team",
-    description: "Work with experienced marketing professionals dedicated to your success.",
+    title: "Expertly Curated",
+    description: "Save time with referrals powered by Internal Sales Agents (ISA) — going beyond the norm to ensure your success.",
   },
 ];
 
@@ -113,20 +113,20 @@ const provenChannels = [
 // Process accordion items
 const processItems = [
   {
-    title: "Strategy Development",
-    content: "We create comprehensive marketing strategies using a blend of strategic PPC, SEO, social media marketing, content creation, and targeted advertising. Our multi-channel approach ensures maximum reach and engagement for your business.",
+    title: "Referral Generation at Marketlyn",
+    content: "We generate high-quality referrals using a blend of strategic PPC, SEO, social media marketing, organic website traffic, and trusted partner platforms. Our multi-channel outreach ensures a steady stream of qualified prospects ready to engage with your business.",
   },
   {
-    title: "Campaign Execution",
-    content: "Our team executes campaigns with precision, monitoring performance in real-time and optimizing for best results. Every campaign is data-driven and focused on your specific goals.",
+    title: "Referral Verification Process",
+    content: "Every referral goes through our rigorous verification process to ensure they are genuine, interested, and ready to take action. We verify contact information and intent before passing leads to you.",
   },
   {
-    title: "Performance Tracking",
-    content: "We provide detailed analytics and reporting so you always know how your campaigns are performing. Transparent metrics help you understand your ROI.",
+    title: "Appointment Scheduling",
+    content: "Our team handles the scheduling process, setting up appointments at times that work for both you and your prospects. No more phone tag or missed opportunities.",
   },
   {
-    title: "Continuous Optimization",
-    content: "Marketing is never set-and-forget. We continuously optimize your campaigns based on performance data to maximize results and minimize costs.",
+    title: "Referral Distribution & Relationship Building",
+    content: "Referrals are distributed exclusively to you in your chosen areas. We help you build lasting relationships with prospects through our ongoing support system.",
   },
   {
     title: "Ongoing Support",
@@ -136,15 +136,15 @@ const processItems = [
 
 // Comparison table data
 const comparisonRows = [
-  { feature: "Pricing Model", marketlyn: "$399 - $1,495 one-time fee", competitor1: "$2,000+/month retainer", competitor2: "$500+/month + ad spend" },
-  { feature: "Custom Strategy", marketlyn: "Fully customized", competitor1: "Template-based", competitor2: "Limited customization" },
-  { feature: "Transparent Pricing", marketlyn: "Stable rates, no hidden fees", competitor1: "Variable pricing", competitor2: "Additional fees for extras" },
-  { feature: "Industry Targeting", marketlyn: "Campaigns tailored to your industry", competitor1: "Generic approach", competitor2: "Limited targeting options" },
-  { feature: "Multi-Channel Marketing", marketlyn: "SEO, PPC, Social, Email, Content", competitor1: "Single channel focus", competitor2: "2-3 channels max" },
-  { feature: "Dedicated Account Manager", marketlyn: true, competitor1: false, competitor2: true },
-  { feature: "Monthly Reporting", marketlyn: "Detailed analytics dashboard", competitor1: "Basic reports", competitor2: "Weekly updates" },
-  { feature: "Campaign Optimization", marketlyn: true, competitor1: false, competitor2: "Extra cost" },
-  { feature: "CRM Integration", marketlyn: "Included (MarketEdge & ClosePoint)", competitor1: false, competitor2: false },
+  { feature: "Subscription Cost", marketlyn: "$399 - $1,495 one-time fee", competitor1: "$200+/month*, up to $1000+/month*", competitor2: "$150 per referral*" },
+  { feature: "Referral Exclusivity", marketlyn: "Exclusive referrals", competitor1: "Varies with subscription tier", competitor2: "First-come, first-served" },
+  { feature: "Consistent Pricing", marketlyn: "Stable rates", competitor1: "Interest and market-driven variability", competitor2: "Sort by property costs and area competition" },
+  { feature: "Preferred Area Selection", marketlyn: "Scheduled appts from your zip codes", competitor1: "Agents can purchase exclusive zip codes", competitor2: "Limited due to high competition" },
+  { feature: "Referral Generation", marketlyn: "Geo-targeted campaigns on multiple platforms", competitor1: "Campaigns across various platforms", competitor2: "Listings/ads on own/other platforms" },
+  { feature: "Contact Confirmation", marketlyn: true, competitor1: false, competitor2: true },
+  { feature: "Referral Distribution Priority", marketlyn: "Exclusive to you", competitor1: "Referrals placed in a pool for agents in that area", competitor2: "Referrals placed in a pool for agents in that area" },
+  { feature: "Customized Advertising Campaigns", marketlyn: true, competitor1: false, competitor2: "Available at an extra cost" },
+  { feature: "SEO Optimized Agent Profile", marketlyn: "Included (MarketEdge & ClosePoint)", competitor1: false, competitor2: false },
 ];
 
 // CRM Add-on pricing
@@ -172,14 +172,14 @@ const soloPlans = [
     price: "$399",
     originalPrice: "",
     period: "/one-time",
-    tagline: "Essential marketing to get you started.",
-    bestFor: "Small businesses looking to establish their digital presence.",
+    tagline: "A steady stream of qualified conversations.",
+    bestFor: "Solo agents and newer realtors who want predictable lead flow without complexity.",
     features: [
-      "Social Media Setup & Management",
-      "Basic SEO Optimization",
-      "2 Marketing Campaigns/month",
-      "Monthly Performance Report",
-      "Email Marketing Setup",
+      "15% Referral Fee",
+      "2-3 Exclusive Referrals/month",
+      "2-4 Zip Codes/Areas",
+      "BDR - Verified",
+      "Email Marketing",
     ],
     tag: "Starter",
     tagColor: "bg-blue-500",
@@ -192,16 +192,16 @@ const soloPlans = [
     price: "$799",
     originalPrice: "$897",
     period: "/one-time",
-    tagline: "Accelerate your business growth with proven strategies.",
-    bestFor: "Businesses ready to scale their marketing efforts.",
+    tagline: "Be the agent prospects see and speak to first.",
+    bestFor: "Agents ready to move from average exposure to local dominance.",
     features: [
-      "Full Social Media Management",
-      "Advanced SEO & Content Strategy",
-      "4 Marketing Campaigns/month",
-      "PPC Advertising Management",
-      "Email Marketing Automation",
-      "Detailed Analytics Dashboard",
-      "Exclusive Schedule Appointment",
+      "15% Referral Fee",
+      "3-5 Exclusive Referrals/month",
+      "5-7 Zip Codes/Areas",
+      "Exclusive Scheduled Appointments",
+      "BDR - Verified",
+      "Email Marketing",
+      "SEO Optimized Agent Profile",
       "Priority Support",
     ],
     tag: "Most Popular",
@@ -215,16 +215,15 @@ const soloPlans = [
     price: "$1,495",
     originalPrice: "$1,695",
     period: "/one-time",
-    tagline: "Complete marketing solution for maximum impact.",
-    bestFor: "Businesses seeking comprehensive marketing domination.",
+    tagline: "Designed for agents who expect efficiency.",
+    bestFor: "High performers who want leads closer to decision-making.",
     features: [
-      "Full-Service Marketing",
-      "Unlimited Campaigns",
-      "Multi-Channel Advertising",
-      "Video Content Production",
-      "Brand Development",
-      "Custom Landing Pages",
-      "Dedicated Account Manager",
+      "10% Referral Fee",
+      "4-6 Exclusive Referrals/month",
+      "Zip Codes/Counties/Cities",
+      "Live Transfers",
+      "SEO Optimized Agent Profile",
+      "Dedicated Support Manager",
       "FREE CRM Included",
     ],
     tag: "Best Results",
@@ -242,20 +241,20 @@ const teamPlans = [
     price: "$2,695",
     originalPrice: "",
     period: "/one-time",
-    tagline: "Comprehensive marketing for growing businesses.",
-    bestFor: "Businesses with teams ready to dominate their market.",
+    tagline: "Tailored campaigns to fuel small team success.",
+    bestFor: "Small teams ready to scale their lead generation together.",
     features: [
-      "Up to 5 Team Members",
-      "Full Marketing Strategy",
-      "Multi-Channel Campaigns",
-      "Content Marketing",
-      "Social Media Management",
-      "PPC & SEO Services",
-      "Video Production",
-      "Monthly Blog Content",
-      "Brand Guidelines",
-      "Team Training Session",
-      "Dedicated Account Manager",
+      "10% Referral Fee",
+      "Up to 5 Agents",
+      "2-4 Exclusive Referrals/month per Agent",
+      "Zip Codes/Counties/Cities",
+      "Live Transfers",
+      "Exclusive Scheduled Appointments",
+      "BDR - Verified",
+      "Free Blog Posting",
+      "SEO Optimized Agent Profile (per agent)",
+      "SEO Optimized Team Profile",
+      "Dedicated Support Manager",
       "FREE CRM Included",
     ],
     tag: "",
@@ -268,20 +267,20 @@ const teamPlans = [
     price: "$3,899",
     originalPrice: "",
     period: "/one-time",
-    tagline: "Enterprise-level marketing for maximum growth.",
-    bestFor: "Larger organizations requiring full-scale marketing.",
+    tagline: "Scalable lead generation for larger teams.",
+    bestFor: "Growing teams who need maximum coverage and support.",
     features: [
-      "Up to 10 Team Members",
-      "Custom Marketing Strategy",
-      "Unlimited Campaigns",
-      "Advanced Analytics & Reporting",
-      "Multi-Location Support",
-      "Comprehensive Content Production",
-      "Full Brand Management",
-      "Weekly Blog Content",
-      "Custom Integrations",
-      "Executive Training Sessions",
-      "Dedicated Account Manager",
+      "10% Referral Fee",
+      "Up to 10 Agents",
+      "2-4 Exclusive Referrals/month per Agent",
+      "Zip Codes/Counties/Cities",
+      "Live Transfers",
+      "Exclusive Scheduled Appointments",
+      "BDR - Verified",
+      "Free Blog Posting",
+      "SEO Optimized Agent Profile (per agent)",
+      "SEO Optimized Team Profile",
+      "Dedicated Support Manager",
       "FREE CRM Included",
       "Priority Support",
     ],
@@ -378,8 +377,8 @@ const crmBenefits = [
   {
     icon: IconUsers,
     stat: "500+",
-    label: "Clients Served",
-    description: "Join successful businesses",
+    label: "Agents Using",
+    description: "Join successful agents",
   },
 ];
 
@@ -395,28 +394,28 @@ const toolsReplaced = [
 // FAQ items
 const faqItems = [
   {
-    question: "What marketing services does Marketlyn offer?",
-    answer: "We offer comprehensive digital marketing services including SEO, PPC advertising, social media marketing, content creation, email marketing, video production, and brand development.",
+    question: "How does Marketlyn generate high-quality leads?",
+    answer: "We use a combination of paid advertising, SEO, social media marketing, and strategic partnerships to generate leads. Each lead is verified by our internal team before being passed to you.",
   },
   {
-    question: "What makes Marketlyn different from other agencies?",
-    answer: "We combine AI-powered strategies with human expertise to deliver measurable results. Our one-time pricing model means no monthly retainers, and our dedicated team works exclusively on your success.",
+    question: "What sets Marketlyn's referrals apart from others?",
+    answer: "Our referrals are exclusive to you - we never share them with competitors in your area. Each referral is ISA qualified and verified, ensuring higher conversion rates.",
   },
   {
-    question: "What's included in each plan?",
-    answer: "Each plan includes a comprehensive marketing strategy tailored to your needs. Starter includes essential setup, Growth adds advanced campaigns and PPC, and Premium provides full-service marketing with video production.",
+    question: "How many referrals do I get per month?",
+    answer: "The number of referrals depends on your plan. Dealflow receives 2-3 referrals/month, MarketEdge receives 3-5, and ClosePoint receives 4-6 exclusive referrals per month.",
   },
   {
-    question: "How do I get started with Marketlyn?",
-    answer: "Simply choose a plan that fits your needs and click 'Get Started'. Our team will reach out within 24 hours to schedule an onboarding call and begin developing your strategy.",
+    question: "How do I sign up to receive referrals from Marketlyn?",
+    answer: "Simply choose a plan that fits your needs and click 'Claim my area'. Our team will reach out to set up your account and preferred areas within 24 hours.",
   },
   {
-    question: "How do you measure and report results?",
-    answer: "We provide detailed analytics dashboards and monthly performance reports. You'll see metrics on traffic, engagement, conversions, and ROI across all your marketing channels.",
+    question: "How does Marketlyn nurture/verify the referrals?",
+    answer: "Our Business Development Representatives (BDRs) verify each lead through phone calls and email confirmation. We ensure the prospect is genuinely interested before scheduling appointments.",
   },
   {
-    question: "Is there ongoing support after setup?",
-    answer: "Yes! All plans include dedicated support. Premium and Team plans include a dedicated account manager for personalized guidance and strategy optimization.",
+    question: "What is Marketlyn's referral fee structure?",
+    answer: "Referral fees range from 10-15% depending on your plan. ClosePoint and Team plans enjoy lower referral fees at 10%, while Dealflow and MarketEdge plans have a 15% referral fee.",
   },
 ];
 
@@ -476,16 +475,16 @@ export default function PricingPage() {
           >
             <Badge>
               <div className="w-5 h-5 rounded-full bg-gradient-to-br from-[#b49146] to-[#e8d5a3] mr-2" />
-              {siteConfig.name}&apos;s Marketing Services
+              {siteConfig.name}&apos;s Lead Generation
             </Badge>
             <h1 className="mt-8 text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
               Our Proven approach to<br />
               <span className="bg-gradient-to-r from-[#e8d5a3] via-[#fff8e7] to-[#e8d5a3] bg-clip-text text-transparent">
-                Digital Marketing.
+                Lead Generation.
               </span>
             </h1>
             <p className="mt-6 text-lg text-white/60 max-w-3xl mx-auto">
-              We blend AI-powered strategies with expert human insight, multi-channel campaigns, and targeted marketing to consistently deliver measurable results for your business.
+              We blend a mixture of Human and AI-powered qualification, multi-channel outreach, and targeted marketing strategies to consistently deliver high-intent leads ready to engage with your business.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <MagneticButton variant="primary" href="#plans">
@@ -503,34 +502,34 @@ export default function PricingPage() {
           <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_10%,black_90%,transparent_100%)]">
             <div className="flex w-max animate-marquee">
               {/* First set of logos */}
-              {partnerLogos.map((partner, idx) => (
+              {brokerageLogos.map((brokerage, idx) => (
                 <div
                   key={`first-${idx}`}
                   className="relative h-12 w-24 md:h-12 md:w-36 mx-4 md:mx-6 opacity-70 hover:opacity-100 transition-opacity flex-shrink-0"
                 >
                   <Image
-                    src={partner.logo}
-                    alt={partner.name}
+                    src={brokerage.logo}
+                    alt={brokerage.name}
                     fill
-                    className={`object-contain ${partner.keepColor ? "" : "[filter:brightness(0)_invert(1)]"}`}
+                    className={`object-contain ${brokerage.keepColor ? "" : "[filter:brightness(0)_invert(1)]"}`}
                     sizes="(max-width: 768px) 96px, 150px"
-                    style={{ transform: `scale(${partner.scale})` }}
+                    style={{ transform: `scale(${brokerage.scale})` }}
                   />
                 </div>
               ))}
               {/* Duplicate set for seamless loop */}
-              {partnerLogos.map((partner, idx) => (
+              {brokerageLogos.map((brokerage, idx) => (
                 <div
                   key={`second-${idx}`}
                   className="relative h-12 w-24 md:h-12 md:w-36 mx-4 md:mx-6 opacity-70 hover:opacity-100 transition-opacity flex-shrink-0"
                 >
                   <Image
-                    src={partner.logo}
-                    alt={partner.name}
+                    src={brokerage.logo}
+                    alt={brokerage.name}
                     fill
-                    className={`object-contain ${partner.keepColor ? "" : "[filter:brightness(0)_invert(1)]"}`}
+                    className={`object-contain ${brokerage.keepColor ? "" : "[filter:brightness(0)_invert(1)]"}`}
                     sizes="(max-width: 768px) 96px, 150px"
-                    style={{ transform: `scale(${partner.scale})` }}
+                    style={{ transform: `scale(${brokerage.scale})` }}
                   />
                 </div>
               ))}
@@ -551,7 +550,7 @@ export default function PricingPage() {
               Why choose {siteConfig.name}?
             </h2>
             <p className="mt-4 text-lg text-white/60 max-w-2xl mx-auto">
-              In today's competitive market, effective marketing is the key to business growth. Our approach? Precision-targeted, data-driven, compelling campaigns that convert.
+              In the luxury real estate world, quality leads are the key to successful sales campaigns. Our approach? Precision-targeted, visually striking, compelling campaigns that convert.
             </p>
           </motion.div>
 
@@ -665,7 +664,7 @@ export default function PricingPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#161616] via-transparent to-transparent" />
               </div>
               <div className="flex gap-2">
-                {["Strategy", "Execution", "Optimization"].map((tab, idx) => (
+                {["Lead Generation", "Lead Qualification", "Lead Nurturing"].map((tab, idx) => (
                   <button
                     key={idx}
                     onClick={() => setActiveTab(idx)}
@@ -756,8 +755,8 @@ export default function PricingPage() {
                       <span className="text-white font-bold">{siteConfig.name}</span>
                     </div>
                   </th>
-                  <th className="py-4 px-4 text-center text-white/70">Traditional Agency</th>
-                  <th className="py-4 px-4 text-center text-white/70">Freelancers</th>
+                  <th className="py-4 px-4 text-center text-white/70">realtor.com</th>
+                  <th className="py-4 px-4 text-center text-white/70">Zillow</th>
                 </tr>
               </thead>
               <tbody>
@@ -923,7 +922,7 @@ export default function PricingPage() {
                         : "bg-white/5 text-white border border-white/10 hover:bg-white/10"
                     }`}
                   >
-                    Get Started
+                    Claim My Area
                     <IconArrowUpRight className="w-4 h-4" />
                   </a>
 
@@ -988,14 +987,14 @@ export default function PricingPage() {
               CRM Services
             </Badge>
             <h2 className="mt-6 text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-              Your Complete{" "}
+              Your Complete Real Estate{" "}
               <span className="bg-gradient-to-r from-[#e8d5a3] via-[#fff8e7] to-[#e8d5a3] bg-clip-text text-transparent">
                 Business Hub
               </span>
             </h2>
             <p className="mt-4 text-lg text-white/60 max-w-3xl mx-auto">
               Powered by GoHighLevel – the #1 all-in-one platform trusted by 100,000+ businesses.
-              We set it up, customize it for your needs, and manage it so you can focus on growth.
+              We set it up, customize it for real estate, and manage it so you can focus on closing deals.
             </p>
           </motion.div>
 
@@ -1132,7 +1131,7 @@ export default function PricingPage() {
                 ))}
               </div>
               <div className="p-4 rounded-xl bg-[#d5b367]/20 text-center">
-                <p className="text-xs text-white/60 mb-1">Included with Premium and Business Plans</p>
+                <p className="text-xs text-white/60 mb-1">Included with ClosePoint and Team Plans</p>
                 <p className="text-2xl font-bold text-white">FREE CRM</p>
                 <p className="text-xs text-[#d5b367] mt-1">$197/mo value included</p>
               </div>

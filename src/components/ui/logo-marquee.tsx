@@ -3,9 +3,9 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-// Partner logos for the marquee - using local images
+// Brokerage logos for the marquee - using local images
 // scale property to adjust for logos with different visual sizes
-const partnerLogos = [
+const brokerageLogos = [
   { name: "Partner 1", logo: "/logos/1.png", scale: 1 },
   { name: "Partner 2", logo: "/logos/2.png", scale: 1 },
   { name: "Partner 3", logo: "/logos/3.png", scale: 1 },
@@ -29,7 +29,7 @@ interface LogoMarqueeProps {
 }
 
 export default function LogoMarquee({
-  title = "Trusted by businesses across industries",
+  title = "Trusted by agents at leading brokerages",
   duration = 25,
   className = "",
   width = "75%",
@@ -54,18 +54,18 @@ export default function LogoMarquee({
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration, ease: "linear", repeat: Infinity }}
         >
-          {[...partnerLogos, ...partnerLogos].map((partner, idx) => (
+          {[...brokerageLogos, ...brokerageLogos].map((brokerage, idx) => (
             <div
               key={idx}
               className="relative h-10 w-32 mx-5 opacity-60 hover:opacity-90 transition-opacity flex-shrink-0"
             >
               <Image
-                src={partner.logo}
-                alt={partner.name}
+                src={brokerage.logo}
+                alt={brokerage.name}
                 fill
                 className="object-contain brightness-0 invert"
                 sizes="160px"
-                style={{ transform: `scale(${partner.scale})` }}
+                style={{ transform: `scale(${brokerage.scale})` }}
               />
             </div>
           ))}

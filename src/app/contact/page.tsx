@@ -97,7 +97,7 @@ const formatCTTime = (hour: number, minute: number): string => {
 
 const subjectOptions = [
   "Social Media Marketing",
-  "PPC & Google Ads",
+  "Lead Generation",
   "SEO & Local Search",
   "Content Creation",
   "Video Production",
@@ -109,7 +109,7 @@ const subjectOptions = [
 
 const interestOptions = [
   "Social Media Marketing",
-  "PPC & Google Ads",
+  "Lead Generation",
   "SEO & Local Search",
   "Content Creation",
   "Video Production",
