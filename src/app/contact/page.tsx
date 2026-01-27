@@ -95,18 +95,6 @@ const formatCTTime = (hour: number, minute: number): string => {
   return `${displayHour}:${displayMinute} ${period} CT`;
 };
 
-const subjectOptions = [
-  "Social Media Marketing",
-  "Lead Generation",
-  "SEO & Local Search",
-  "Content Creation",
-  "Video Production",
-  "AI Automation",
-  "Full Marketing Package",
-  "General Inquiry",
-  "Other",
-];
-
 const interestOptions = [
   "Social Media Marketing",
   "Lead Generation",
@@ -147,7 +135,6 @@ export default function ContactPage() {
     lastName: "",
     phone: "",
     email: "",
-    subject: "",
     message: "",
     consentSMS: false,
     consentMarketing: false,
@@ -286,10 +273,9 @@ export default function ContactPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: `${formState.firstName} ${formState.lastName}`,
+          name: `${formState.firstName} ${formState.lastName}`.trim(),
           email: formState.email,
           phone: formState.phone,
-          company: formState.subject,
           message: formState.message,
         }),
       });
@@ -303,7 +289,7 @@ export default function ContactPage() {
       setIsSubmitted(true);
       setFormState({
         firstName: "", lastName: "", phone: "", email: "",
-        subject: "", message: "", consentSMS: false, consentMarketing: false, agreeTerms: false
+        message: "", consentSMS: false, consentMarketing: false, agreeTerms: false
       });
 
       setTimeout(() => setIsSubmitted(false), 5000);
@@ -794,19 +780,17 @@ export default function ContactPage() {
                     <input
                       type="text"
                       name="firstName"
-                      required
                       value={formState.firstName}
                       onChange={handleInputChange}
-                      placeholder="First Name*"
+                      placeholder="First Name"
                       className="w-full px-4 py-3.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#d5b367] focus:ring-1 focus:ring-[#d5b367] transition-colors"
                     />
                     <input
                       type="text"
                       name="lastName"
-                      required
                       value={formState.lastName}
                       onChange={handleInputChange}
-                      placeholder="Last Name*"
+                      placeholder="Last Name"
                       className="w-full px-4 py-3.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#d5b367] focus:ring-1 focus:ring-[#d5b367] transition-colors"
                     />
                   </div>
@@ -814,10 +798,9 @@ export default function ContactPage() {
                   <input
                     type="tel"
                     name="phone"
-                    required
                     value={formState.phone}
                     onChange={handleInputChange}
-                    placeholder="Phone*"
+                    placeholder="Phone"
                     className="w-full px-4 py-3.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#d5b367] focus:ring-1 focus:ring-[#d5b367] transition-colors"
                   />
 
@@ -830,21 +813,6 @@ export default function ContactPage() {
                     placeholder="Email*"
                     className="w-full px-4 py-3.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#d5b367] focus:ring-1 focus:ring-[#d5b367] transition-colors"
                   />
-
-                  <select
-                    name="subject"
-                    required
-                    value={formState.subject}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3.5 rounded-lg bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#d5b367] focus:ring-1 focus:ring-[#d5b367] transition-colors appearance-none cursor-pointer"
-                  >
-                    <option value="" className="bg-[#161616]">Subject*</option>
-                    {subjectOptions.map((option) => (
-                      <option key={option} value={option} className="bg-[#161616]">
-                        {option}
-                      </option>
-                    ))}
-                  </select>
 
                   <textarea
                     name="message"
