@@ -195,6 +195,10 @@ export default function RefundPolicyPage() {
                     support@marketlyn.com
                   </a>
                 </p>
+                <p className="text-white">
+                  <span className="text-white/50">Address: </span>
+                  30 N Gould St Ste R, Sheridan, WY 82801
+                </p>
               </div>
             </section>
 
