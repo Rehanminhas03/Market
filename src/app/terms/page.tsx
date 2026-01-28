@@ -91,7 +91,7 @@ const termsContent = [
   {
     title: "14. Contact and Support",
     content:
-      "Support inquiries are addressed within five (5) business days. For questions regarding these Terms, please contact us at info@marketlyn.com.",
+      "Support inquiries are addressed within five (5) business days. For questions regarding these Terms, please contact us at support@marketlyn.com.",
   },
 ];
 
