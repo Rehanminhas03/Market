@@ -675,7 +675,7 @@ export default function ContactPage() {
                               </div>
                             </div>
                             <span className="text-[10px] text-white/50 leading-relaxed">
-                              I Consent to Receive SMS Notifications from {siteConfig.name}. Message & data rates may apply.
+                              I Consent to Receive SMS Notifications, Alerts from {siteConfig.name}. Message frequency varies. Message & data rates may apply. Text HELP to {siteConfig.phone} for assistance. You can reply STOP to unsubscribe at any time.
                             </span>
                           </label>
 
@@ -693,7 +693,7 @@ export default function ContactPage() {
                               </div>
                             </div>
                             <span className="text-[10px] text-white/50 leading-relaxed">
-                              I agree to receive marketing messages from {siteConfig.name}.
+                              By checking this box I agree to receive occasional marketing messages from {siteConfig.name}.
                             </span>
                           </label>
 
@@ -780,17 +780,19 @@ export default function ContactPage() {
                     <input
                       type="text"
                       name="firstName"
+                      required
                       value={formState.firstName}
                       onChange={handleInputChange}
-                      placeholder="First Name"
+                      placeholder="First Name*"
                       className="w-full px-4 py-3.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#d5b367] focus:ring-1 focus:ring-[#d5b367] transition-colors"
                     />
                     <input
                       type="text"
                       name="lastName"
+                      required
                       value={formState.lastName}
                       onChange={handleInputChange}
-                      placeholder="Last Name"
+                      placeholder="Last Name*"
                       className="w-full px-4 py-3.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#d5b367] focus:ring-1 focus:ring-[#d5b367] transition-colors"
                     />
                   </div>
@@ -798,9 +800,10 @@ export default function ContactPage() {
                   <input
                     type="tel"
                     name="phone"
+                    required
                     value={formState.phone}
                     onChange={handleInputChange}
-                    placeholder="Phone"
+                    placeholder="Phone*"
                     className="w-full px-4 py-3.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#d5b367] focus:ring-1 focus:ring-[#d5b367] transition-colors"
                   />
 
@@ -839,7 +842,7 @@ export default function ContactPage() {
                         </div>
                       </div>
                       <span className="text-xs text-white/50 leading-relaxed">
-                        I Consent to Receive SMS Notifications, Alerts from {siteConfig.name}. Message frequency varies. Message & data rates may apply. You can reply STOP to unsubscribe at any time.
+                        I Consent to Receive SMS Notifications, Alerts from {siteConfig.name}. Message frequency varies. Message & data rates may apply. Text HELP to {siteConfig.phone} for assistance. You can reply STOP to unsubscribe at any time.
                       </span>
                     </label>
 
