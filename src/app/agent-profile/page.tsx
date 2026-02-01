@@ -551,12 +551,12 @@ export default function AgentProfilePage() {
                   animate={statsInView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
                 >
-                  <p className="text-4xl md:text-5xl font-bold text-[#0a0a0a] mb-2">
+                  <p className="text-4xl md:text-5xl font-bold text-[#0a0a0a] mb-2 whitespace-nowrap">
                     {stat.prefix}
                     {stat.isDecimal ? stat.value : <AnimatedCounter end={stat.value} />}
                     {stat.suffix}
                   </p>
-                  <p className="text-[#0a0a0a]/70 uppercase tracking-widest text-xs">{stat.label}</p>
+                  <p className="text-[#0a0a0a]/70 uppercase tracking-wider text-xs font-medium">{stat.label}</p>
                 </motion.div>
               ))}
             </div>
@@ -842,11 +842,11 @@ export default function AgentProfilePage() {
             >
               <p className="text-white/50 text-sm mb-2">Or email us directly at</p>
               <a
-                href="mailto:info@marketlyn.com"
+                href="mailto:support@marketlyn.com"
                 className="inline-flex items-center gap-2 text-[#d5b367] hover:text-[#e8d5a3] transition-colors"
               >
                 <IconMail className="w-5 h-5" />
-                info@marketlyn.com
+                support@marketlyn.com
               </a>
             </motion.div>
           </motion.div>

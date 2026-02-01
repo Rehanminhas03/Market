@@ -89,7 +89,27 @@ const termsContent = [
       "We may update these Terms with 30 days' notice. Continued use of services constitutes acceptance.",
   },
   {
-    title: "14. Contact and Support",
+    title: "14. SMS Terms",
+    content:
+      "Marketlyn may send SMS messages related to service updates, lead notifications, onboarding communication, and account support. Message frequency varies. Message and data rates may apply. Carriers are not liable for delayed or undelivered messages. To opt out reply STOP. For assistance reply HELP or contact support@marketlyn.com.",
+    list: [
+      "By opting in, you consent to receive SMS messages from Marketlyn. Consent is not a condition of purchase.",
+      "Wireless carriers are not responsible for delayed, failed, or undelivered messages.",
+      "Message frequency varies based on activity and engagement.",
+    ],
+  },
+  {
+    title: "15. Age Restriction",
+    content:
+      "You must be at least 18 years of age to use our services or opt in to SMS communications.",
+  },
+  {
+    title: "16. Link to Privacy Policy",
+    content:
+      "Your use of our services is also governed by our Privacy Policy, which describes how we collect, use, and protect your information. By using our services, you agree to the terms of our Privacy Policy.",
+  },
+  {
+    title: "17. Contact and Support",
     content:
       "Support inquiries are addressed within five (5) business days. For questions regarding these Terms, please contact us at support@marketlyn.com.",
   },

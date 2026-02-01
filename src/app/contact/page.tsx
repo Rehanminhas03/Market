@@ -734,6 +734,11 @@ export default function ContactPage() {
                             </>
                           )}
                         </button>
+
+                        {/* SMS Disclosure */}
+                        <p className="text-[9px] text-white/30 leading-relaxed text-center pt-2">
+                          Message frequency varies based on activity and engagement. You can opt out at any time by replying STOP to any message. Message and data rates may apply based on your carrier plan.
+                        </p>
                       </form>
                     </div>
                   )}
@@ -901,6 +906,13 @@ export default function ContactPage() {
                       </>
                     )}
                   </button>
+
+                  {/* SMS Disclosure */}
+                  <div className="space-y-1 pt-2">
+                    <p className="text-[10px] text-white/30 leading-relaxed text-center">
+                      Message frequency varies based on activity and engagement. You can opt out at any time by replying STOP to any message. Message and data rates may apply based on your carrier plan.
+                    </p>
+                  </div>
 
                   {/* Privacy & Terms Links */}
                   <div className="flex items-center justify-center gap-4 pt-2">

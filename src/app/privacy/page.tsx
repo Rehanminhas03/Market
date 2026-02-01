@@ -94,6 +94,14 @@ const sections = [
     content: "Our website may contain links to third party websites. We are not responsible for their privacy practices or content."
   },
   {
+    title: "SMS Communications",
+    content: "We collect mobile phone numbers only when voluntarily submitted by users. Phone numbers are used solely for service related communications including lead notifications, onboarding updates, account alerts, and support messages. SMS consent is not shared with third parties or affiliates. Users may opt out at any time by replying STOP.",
+    paragraphs: [
+      "Mobile information will not be shared with third parties or affiliates for marketing or promotional purposes.",
+      "By submitting your phone number and opting in, you consent to receive SMS messages from Marketlyn. Consent is not a condition of purchase."
+    ]
+  },
+  {
     title: "Updates to This Policy",
     content: "We may update this Privacy Policy from time to time. The effective date at the top reflects the most recent version. Continued use of our services means you accept the updated policy."
   }
