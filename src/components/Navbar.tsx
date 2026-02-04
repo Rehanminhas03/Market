@@ -21,6 +21,7 @@ const navItems = [
   { name: "CRM", link: "/#crm" },
   { name: "SEO Agent Profile", link: "/agent-profile" },
   { name: "FAQ", link: "/#faq" },
+  { name: "Contact", link: "/contact" },
 ];
 
 export default function NavbarDemo() {

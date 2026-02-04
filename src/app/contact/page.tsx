@@ -675,7 +675,7 @@ export default function ContactPage() {
                               </div>
                             </div>
                             <span className="text-[10px] text-white/50 leading-relaxed">
-                              I Consent to Receive SMS Notifications, Alerts from {siteConfig.name}. Message frequency varies. Message & data rates may apply. Text HELP to {siteConfig.phone} for assistance. You can reply STOP to unsubscribe at any time.
+                              I consent to receive transactional messages from {siteConfig.name} at the phone number provided. Message frequency may vary. Message & Data rates may apply. Reply HELP for help or STOP to opt-out.
                             </span>
                           </label>
 
@@ -693,33 +693,14 @@ export default function ContactPage() {
                               </div>
                             </div>
                             <span className="text-[10px] text-white/50 leading-relaxed">
-                              By checking this box I agree to receive occasional marketing messages from {siteConfig.name}.
-                            </span>
-                          </label>
-
-                          <label className="flex items-start gap-2 cursor-pointer">
-                            <div className="relative flex-shrink-0 mt-0.5">
-                              <input
-                                type="checkbox"
-                                name="agreeTerms"
-                                required
-                                checked={bookingForm.agreeTerms}
-                                onChange={handleBookingFormChange}
-                                className="sr-only peer"
-                              />
-                              <div className="w-4 h-4 rounded border border-white/20 bg-white/5 peer-checked:bg-[#d5b367] peer-checked:border-[#d5b367] transition-colors flex items-center justify-center">
-                                {bookingForm.agreeTerms && <IconCheck className="w-2.5 h-2.5 text-[#161616]" />}
-                              </div>
-                            </div>
-                            <span className="text-[10px] text-white/50 leading-relaxed">
-                              I agree to the <Link href="/terms" className="text-[#d5b367] hover:underline">Terms and Conditions</Link>, <Link href="/refund" className="text-[#d5b367] hover:underline">Refund Policy</Link>, and <Link href="/privacy" className="text-[#d5b367] hover:underline">Privacy Policy</Link>.*
+                              I consent to receive marketing and promotional messages from {siteConfig.name} at the phone number provided. Message frequency may vary. Message & Data rates may apply. Reply HELP for help or STOP to opt-out.
                             </span>
                           </label>
                         </div>
 
                         <button
                           type="submit"
-                          disabled={isBookingSubmitting || !bookingForm.agreeTerms}
+                          disabled={isBookingSubmitting}
                           className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-[#d5b367] text-[#161616] font-semibold hover:bg-[#c9a555] disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                         >
                           {isBookingSubmitting ? (
@@ -735,10 +716,16 @@ export default function ContactPage() {
                           )}
                         </button>
 
-                        {/* SMS Disclosure */}
-                        <p className="text-[9px] text-white/30 leading-relaxed text-center pt-2">
-                          Message frequency varies based on activity and engagement. You can opt out at any time by replying STOP to any message. Message and data rates may apply based on your carrier plan.
-                        </p>
+                        {/* Privacy & Terms Links */}
+                        <div className="flex items-center justify-center gap-2 pt-2">
+                          <Link href="/privacy" className="text-[#d5b367] text-[10px] hover:underline">
+                            Privacy Policy
+                          </Link>
+                          <span className="text-white/30 text-[10px]">|</span>
+                          <Link href="/terms" className="text-[#d5b367] text-[10px] hover:underline">
+                            Terms of Service
+                          </Link>
+                        </div>
                       </form>
                     </div>
                   )}
@@ -805,10 +792,9 @@ export default function ContactPage() {
                   <input
                     type="tel"
                     name="phone"
-                    required
                     value={formState.phone}
                     onChange={handleInputChange}
-                    placeholder="Phone*"
+                    placeholder="Phone"
                     className="w-full px-4 py-3.5 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#d5b367] focus:ring-1 focus:ring-[#d5b367] transition-colors"
                   />
 
@@ -847,7 +833,7 @@ export default function ContactPage() {
                         </div>
                       </div>
                       <span className="text-xs text-white/50 leading-relaxed">
-                        I Consent to Receive SMS Notifications, Alerts from {siteConfig.name}. Message frequency varies. Message & data rates may apply. Text HELP to {siteConfig.phone} for assistance. You can reply STOP to unsubscribe at any time.
+                        I consent to receive transactional messages from {siteConfig.name} at the phone number provided. Message frequency may vary. Message & Data rates may apply. Reply HELP for help or STOP to opt-out.
                       </span>
                     </label>
 
@@ -865,33 +851,14 @@ export default function ContactPage() {
                         </div>
                       </div>
                       <span className="text-xs text-white/50 leading-relaxed">
-                        By checking this box I agree to receive occasional marketing messages from {siteConfig.name}.
-                      </span>
-                    </label>
-
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <div className="relative flex-shrink-0 mt-0.5">
-                        <input
-                          type="checkbox"
-                          name="agreeTerms"
-                          required
-                          checked={formState.agreeTerms}
-                          onChange={handleInputChange}
-                          className="sr-only peer"
-                        />
-                        <div className="w-5 h-5 rounded border border-white/20 bg-white/5 peer-checked:bg-[#d5b367] peer-checked:border-[#d5b367] transition-colors flex items-center justify-center">
-                          {formState.agreeTerms && <IconCheck className="w-3 h-3 text-[#161616]" />}
-                        </div>
-                      </div>
-                      <span className="text-xs text-white/50 leading-relaxed">
-                        I agree to the <Link href="/terms" className="text-[#d5b367] hover:underline">Terms and Conditions</Link>, <Link href="/refund" className="text-[#d5b367] hover:underline">Refund Policy</Link>, and <Link href="/privacy" className="text-[#d5b367] hover:underline">Privacy Policy</Link>.*
+                        I consent to receive marketing and promotional messages from {siteConfig.name} at the phone number provided. Message frequency may vary. Message & Data rates may apply. Reply HELP for help or STOP to opt-out.
                       </span>
                     </label>
                   </div>
 
                   <button
                     type="submit"
-                    disabled={isSubmitting || !formState.agreeTerms}
+                    disabled={isSubmitting}
                     className="w-full flex items-center justify-center gap-2 px-6 py-4 rounded-lg bg-[#d5b367] text-[#161616] font-semibold hover:bg-[#c9a555] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 uppercase tracking-wide"
                   >
                     {isSubmitting ? (
@@ -907,18 +874,12 @@ export default function ContactPage() {
                     )}
                   </button>
 
-                  {/* SMS Disclosure */}
-                  <div className="space-y-1 pt-2">
-                    <p className="text-[10px] text-white/30 leading-relaxed text-center">
-                      Message frequency varies based on activity and engagement. You can opt out at any time by replying STOP to any message. Message and data rates may apply based on your carrier plan.
-                    </p>
-                  </div>
-
                   {/* Privacy & Terms Links */}
-                  <div className="flex items-center justify-center gap-4 pt-2">
+                  <div className="flex items-center justify-center gap-4 pt-3">
                     <Link href="/privacy" className="text-[#d5b367] text-sm hover:underline">
                       Privacy Policy
                     </Link>
+                    <span className="text-white/30">|</span>
                     <Link href="/terms" className="text-[#d5b367] text-sm hover:underline">
                       Terms of Service
                     </Link>
