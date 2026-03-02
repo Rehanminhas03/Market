@@ -17,7 +17,7 @@ const termsContent = [
   {
     title: "2. Description of Services",
     content:
-      "We provide digital marketing, campaign management, CRM access, SMS and email campaign facilitation, appointment booking tools, and related services. All services are provided on a best-effort basis. Results are not guaranteed, including conversions, appointments, revenue, or profits.",
+      "We provide marketing, lead generation, CRM access, SMS and email campaign facilitation, appointment booking tools, and related services. All services are provided on a best-effort basis. Results are not guaranteed, including leads, conversions, appointments, revenue, or profits.",
   },
   {
     title: "3. Prohibited Activities",
@@ -27,7 +27,7 @@ const termsContent = [
       "Fraud or misrepresentation",
       "Spam, phishing, or unlawful communications",
       "Excessive, abusive, or unjustified chargebacks",
-      "Unauthorized resale or redistribution of marketing materials",
+      "Unauthorized resale or redistribution of leads",
       "Violations of CAN-SPAM, GDPR, CCPA, TCPA, or consumer protection laws",
     ],
     footer:
@@ -39,9 +39,9 @@ const termsContent = [
       "You are responsible for maintaining the confidentiality of your login credentials and for all activity conducted through your account.",
   },
   {
-    title: "5. Content and Campaign Ownership",
+    title: "5. Lead Ownership and Usage",
     content:
-      "Marketing materials and campaigns created through our platform are licensed solely for your authorized business use. Resale, transfer, or misuse of these materials is strictly prohibited.",
+      "Leads generated through our platform are licensed solely for your authorized business use. Resale, transfer, or misuse of leads is strictly prohibited.",
   },
   {
     title: "6. Fees, Billing, and Refunds",
@@ -64,44 +64,52 @@ const termsContent = [
       "We comply with applicable data protection laws, including GDPR and CCPA where applicable. We use vetted third-party providers to deliver our services.",
   },
   {
-    title: "9. SMS Terms",
-    content:
-      "Marketlyn may send SMS messages related to service updates, lead notifications, onboarding communication, and account support.",
-    list: [
-      "Message frequency varies.",
-      "Message and data rates may apply.",
-      "Wireless carriers are not responsible for delayed, failed, or undelivered messages.",
-      "To opt out, reply STOP to any message.",
-      "For assistance, reply HELP or contact support@marketlyn.com.",
-    ],
-  },
-  {
-    title: "10. Third-Party Services and Payment Processors",
+    title: "9. Third-Party Services and Payment Processors",
     content:
       "Our services rely on third-party platforms. We are not responsible for service interruptions, fund holds, or account actions taken by payment processors.",
   },
   {
-    title: "11. No Guarantees",
+    title: "10. No Guarantees",
     content:
       "We do not guarantee financial performance, income, or business success.",
   },
   {
-    title: "12. Termination",
+    title: "11. Termination",
     content:
       "We may suspend or terminate your account immediately for violations of these Terms or conduct posing compliance or financial risk.",
   },
   {
-    title: "13. Governing Law",
+    title: "12. Governing Law",
     content:
       "These Terms are governed by the laws of the State of Colorado, United States.",
   },
   {
-    title: "14. Modifications",
+    title: "13. Modifications",
     content:
       "We may update these Terms with 30 days' notice. Continued use of services constitutes acceptance.",
   },
   {
-    title: "15. Contact and Support",
+    title: "14. SMS Terms",
+    content:
+      "Marketlyn may send SMS messages related to service updates, lead notifications, onboarding communication, and account support. Message frequency varies. Message and data rates may apply. Carriers are not liable for delayed or undelivered messages. To opt out reply STOP. For assistance reply HELP or contact support@marketlyn.com.",
+    list: [
+      "By opting in, you consent to receive SMS messages from Marketlyn. Consent is not a condition of purchase.",
+      "Wireless carriers are not responsible for delayed, failed, or undelivered messages.",
+      "Message frequency varies based on activity and engagement.",
+    ],
+  },
+  {
+    title: "15. Age Restriction",
+    content:
+      "You must be at least 18 years of age to use our services or opt in to SMS communications.",
+  },
+  {
+    title: "16. Link to Privacy Policy",
+    content:
+      "Your use of our services is also governed by our Privacy Policy, which describes how we collect, use, and protect your information. By using our services, you agree to the terms of our Privacy Policy.",
+  },
+  {
+    title: "17. Contact and Support",
     content:
       "Support inquiries are addressed within five (5) business days. For questions regarding these Terms, please contact us at support@marketlyn.com.",
   },

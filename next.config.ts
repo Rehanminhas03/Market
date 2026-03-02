@@ -18,7 +18,6 @@ const nextConfig: NextConfig = {
         hostname: "logo.clearbit.com",
       },
     ],
-    minimumCacheTTL: 60,
   },
 };
 

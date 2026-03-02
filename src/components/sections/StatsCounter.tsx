@@ -17,12 +17,12 @@ const stats = [
   {
     value: 500,
     suffix: "+",
-    label: "Clients served",
+    label: "Agents served",
   },
   {
-    value: 1200,
+    value: 16000,
     suffix: "+",
-    label: "Campaigns launched",
+    label: "Leads generated",
     formatNumber: true,
   },
 ];

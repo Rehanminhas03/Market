@@ -1,47 +1,31 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import NavbarDemo from "@/components/Navbar";
-import ScrollProgress from "@/components/ui/scroll-progress";
-import Footer from "@/components/sections/Footer";
-import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+import Link from "next/link";
 import {
-  IconCheck,
   IconUser,
+  IconMail,
+  IconPhone,
   IconMapPin,
+  IconBuilding,
+  IconLicense,
+  IconMap,
   IconTarget,
   IconCreditCard,
-  IconSend,
-  IconBuilding,
-  IconPhone,
-  IconMail,
-  IconId,
-  IconLicense,
-  IconChevronDown,
+  IconTruck,
+  IconCheck,
+  IconArrowRight,
+  IconArrowLeft,
+  IconSparkles,
 } from "@tabler/icons-react";
-import siteConfig from "@/config/site.json";
-import Link from "next/link";
-
-// Plan options
-const planOptions = [
-  { value: "dealflow", label: "$399 — Dealflow", price: 399 },
-  { value: "marketedge", label: "$699 — MarketEdge", price: 699 },
-  { value: "closepoint", label: "$999 — ClosePoint", price: 999 },
-  { value: "core", label: "$2,695 — Core (Team)", price: 2695 },
-  { value: "scale", label: "$3,899 — Scale (Team)", price: 3899 },
-];
-
-// Radius options
-const radiusOptions = [
-  { value: "15-30", label: "15–30 miles" },
-  { value: "30-50", label: "30–50 miles" },
-  { value: "50-80", label: "50–80 miles" },
-];
+import NavbarDemo from "@/components/Navbar";
+import Footer from "@/components/sections/Footer";
+import ScrollProgress from "@/components/ui/scroll-progress";
 
 // US States
-const usStates = [
+const US_STATES = [
   "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
   "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
   "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
@@ -52,509 +36,717 @@ const usStates = [
   "Wisconsin", "Wyoming"
 ];
 
-// Form sections for step indicator
-const formSections = [
-  { id: 1, title: "Personal Info", icon: IconUser },
-  { id: 2, title: "Location", icon: IconMapPin },
-  { id: 3, title: "Service Areas", icon: IconTarget },
-  { id: 4, title: "Plan", icon: IconCreditCard },
-  { id: 5, title: "Addresses", icon: IconBuilding },
+// Radius options
+const RADIUS_OPTIONS = [
+  { value: "15-30", label: "15–30 miles" },
+  { value: "30-50", label: "30–50 miles" },
+  { value: "50-80", label: "50–80 miles" },
 ];
+
+// Plan options
+const PLAN_OPTIONS = [
+  { value: "dealflow", label: "$399 — Dealflow", price: "$399" },
+  { value: "marketedge", label: "$699 — MarketEdge", price: "$699" },
+  { value: "closepoint", label: "$999 — ClosePoint", price: "$999" },
+  { value: "core", label: "$2,695 — Core (up to 5 agents)", price: "$2,695" },
+  { value: "scale", label: "$3,899 — Scale (up to 10 agents)", price: "$3,899" },
+];
+
+interface FormData {
+  // Personal Information
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  mls: string;
+  licenseNumber: string;
+  // Location Information
+  city: string;
+  state: string;
+  // Service Areas
+  primaryArea: string;
+  primaryRadius: string;
+  secondaryArea: string;
+  secondaryRadius: string;
+  // Plan & Assignment
+  accountManager: string;
+  selectedPlan: string;
+  // Addresses
+  billingAddress: string;
+  shippingAddress: string;
+  sameAsBilling: boolean;
+}
 
 export default function OnboardingPage() {
   const searchParams = useSearchParams();
-  const planParam = searchParams.get("plan");
+  const planFromUrl = searchParams.get("plan") || "";
+  const crmFromUrl = searchParams.get("crm") === "true";
 
-  // Form state
-  const [formData, setFormData] = useState({
-    // Personal Info
+  const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
     mls: "",
     licenseNumber: "",
-    // Location
     city: "",
     state: "",
-    // Service Areas
     primaryArea: "",
     primaryRadius: "",
     secondaryArea: "",
     secondaryRadius: "",
-    // Plan & Assignment
     accountManager: "",
-    selectedPlan: "",
-    // Addresses
+    selectedPlan: planFromUrl,
     billingAddress: "",
     shippingAddress: "",
+    sameAsBilling: false,
   });
 
+  const [errors, setErrors] = useState<Partial<FormData>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState("");
-  const [currentSection, setCurrentSection] = useState(1);
+  const [currentSection, setCurrentSection] = useState(0);
 
-  // Pre-select plan from URL parameter
+  // Update plan from URL when component mounts
   useEffect(() => {
-    if (planParam) {
-      const normalizedPlan = planParam.toLowerCase();
-      const matchedPlan = planOptions.find(p => p.value === normalizedPlan);
-      if (matchedPlan) {
-        setFormData(prev => ({ ...prev, selectedPlan: matchedPlan.value }));
-      }
+    if (planFromUrl) {
+      setFormData(prev => ({ ...prev, selectedPlan: planFromUrl }));
     }
-  }, [planParam]);
+  }, [planFromUrl]);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+  // Handle same as billing checkbox
+  useEffect(() => {
+    if (formData.sameAsBilling) {
+      setFormData(prev => ({ ...prev, shippingAddress: prev.billingAddress }));
+    }
+  }, [formData.sameAsBilling, formData.billingAddress]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
+
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+
+    // Clear error when user starts typing
+    if (errors[name as keyof FormData]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: Partial<FormData> = {};
+
+    // Required fields validation
+    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
+    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email";
+    }
+    if (!formData.phone.trim()) newErrors.phone = "Phone number is required";
+    if (!formData.mls.trim()) newErrors.mls = "MLS is required";
+    if (!formData.licenseNumber.trim()) newErrors.licenseNumber = "License number is required";
+    if (!formData.city.trim()) newErrors.city = "City is required";
+    if (!formData.state) newErrors.state = "State is required";
+    if (!formData.primaryArea.trim()) newErrors.primaryArea = "Primary area is required";
+    if (!formData.primaryRadius) newErrors.primaryRadius = "Primary radius is required";
+    if (!formData.selectedPlan) newErrors.selectedPlan = "Please select a plan";
+    if (!formData.billingAddress.trim()) newErrors.billingAddress = "Billing address is required";
+    if (!formData.shippingAddress.trim() && !formData.sameAsBilling) {
+      newErrors.shippingAddress = "Shipping address is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      // Scroll to first error
+      const firstError = document.querySelector(".text-red-400");
+      if (firstError) {
+        firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      return;
+    }
+
     setIsSubmitting(true);
-    setError("");
 
     try {
       const response = await fetch("/api/onboarding", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          shippingAddress: formData.sameAsBilling ? formData.billingAddress : formData.shippingAddress,
+          includeCRM: crmFromUrl,
+        }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.error || "Failed to submit form");
+        throw new Error("Submission failed");
       }
 
       setIsSubmitted(true);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to submit. Please try again.");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("There was an error submitting your form. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Input field component for consistency
-  const InputField = ({
-    name,
-    label,
-    type = "text",
-    placeholder,
-    required = true,
-    icon: Icon,
-  }: {
-    name: string;
-    label: string;
-    type?: string;
-    placeholder: string;
-    required?: boolean;
-    icon?: React.ComponentType<{ className?: string }>;
-  }) => (
-    <div className="space-y-1.5">
-      <label className="text-sm font-medium text-white/70">{label}{required && "*"}</label>
-      <div className="relative">
-        {Icon && (
-          <Icon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
-        )}
-        <input
-          type={type}
-          name={name}
-          required={required}
-          value={formData[name as keyof typeof formData]}
-          onChange={handleInputChange}
-          placeholder={placeholder}
-          className={`w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#d5b367] focus:ring-1 focus:ring-[#d5b367] transition-colors ${Icon ? 'pl-10' : ''}`}
-        />
-      </div>
-    </div>
-  );
-
-  // Select field component
-  const SelectField = ({
-    name,
-    label,
-    options,
-    placeholder,
-    required = true,
-  }: {
-    name: string;
-    label: string;
-    options: { value: string; label: string }[];
-    placeholder: string;
-    required?: boolean;
-  }) => (
-    <div className="space-y-1.5">
-      <label className="text-sm font-medium text-white/70">{label}{required && "*"}</label>
-      <div className="relative">
-        <select
-          name={name}
-          required={required}
-          value={formData[name as keyof typeof formData]}
-          onChange={handleInputChange}
-          className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white focus:outline-none focus:border-[#d5b367] focus:ring-1 focus:ring-[#d5b367] transition-colors appearance-none cursor-pointer"
-        >
-          <option value="" className="bg-[#161616]">{placeholder}</option>
-          {options.map((option) => (
-            <option key={option.value} value={option.value} className="bg-[#161616]">
-              {option.label}
-            </option>
-          ))}
-        </select>
-        <IconChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
-      </div>
-    </div>
-  );
+  const sections = [
+    { title: "Personal Information", icon: IconUser },
+    { title: "Location", icon: IconMapPin },
+    { title: "Service Areas", icon: IconTarget },
+    { title: "Plan & Assignment", icon: IconSparkles },
+    { title: "Addresses", icon: IconTruck },
+  ];
 
   if (isSubmitted) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#0f0f0f] to-[#161616]">
+      <div className="min-h-screen bg-[#0a0a0a]">
         <ScrollProgress />
         <NavbarDemo />
-
         <main className="relative pt-32 pb-20 px-4">
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto text-center">
             <motion.div
-              className="bg-white/5 border border-white/10 rounded-2xl p-12 text-center"
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white/[0.03] border border-white/10 rounded-3xl p-12"
             >
-              <div className="w-20 h-20 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
-                <IconCheck className="w-10 h-10 text-green-500" />
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                <IconCheck className="w-10 h-10 text-emerald-400" />
               </div>
-              <h2 className="text-3xl font-bold text-white mb-4">Submission Received!</h2>
-              <p className="text-white/60 mb-6 text-lg">
-                Thank you for your submission. Our team will review your information and get in touch within 24-48 hours.
+              <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Thank You!
+              </h1>
+              <p className="text-white/60 text-lg mb-8">
+                Your onboarding form has been submitted successfully. Our team will review your information and reach out to you within 24-48 hours.
               </p>
-              <p className="text-white/40 mb-8">
-                A confirmation email has been sent to <span className="text-[#d5b367]">{formData.email}</span>
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/"
-                  className="px-6 py-3 rounded-lg bg-[#d5b367] text-[#161616] font-semibold hover:bg-[#c9a555] transition-colors"
-                >
-                  Return Home
-                </Link>
-                <Link
-                  href="/contact"
-                  className="px-6 py-3 rounded-lg bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-colors"
-                >
-                  Contact Us
-                </Link>
-              </div>
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#d5b367] text-[#0a0a0a] font-medium rounded-full hover:bg-[#c9a555] transition-colors"
+              >
+                Back to Home
+                <IconArrowRight className="w-4 h-4" />
+              </Link>
             </motion.div>
           </div>
         </main>
-
         <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#0f0f0f] to-[#161616]">
+    <div className="min-h-screen bg-[#0a0a0a]">
       <ScrollProgress />
       <NavbarDemo />
 
-      <main className="relative pt-32 pb-20 px-4 overflow-hidden">
-        {/* Background Decorative Elements */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div
-            className="absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage: 'radial-gradient(circle, #d5b367 1px, transparent 1px)',
-              backgroundSize: '40px 40px',
-            }}
-          />
-          <div className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-[#d5b367]/5 blur-[120px]" />
-          <div className="absolute top-1/4 -left-60 w-[500px] h-[500px] rounded-full bg-[#d5b367]/3 blur-[100px]" />
-          <div className="absolute top-[50%] left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-full bg-[#d5b367]/5 blur-[150px]" />
+      <main className="relative pt-32 pb-20 px-4">
+        {/* Background Effects */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-[#d5b367]/10 rounded-full blur-[150px]" />
+          <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-[#d5b367]/5 rounded-full blur-[120px]" />
         </div>
 
-        <div className="max-w-4xl mx-auto relative z-10">
+        <div className="relative z-10 max-w-4xl mx-auto">
           {/* Header */}
           <motion.div
             className="text-center mb-12"
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Badge>
-              <div className="w-2 h-2 rounded-full bg-[#d5b367] mr-2 animate-pulse" />
-              Client Onboarding
-            </Badge>
-            <h1 className="mt-6 text-4xl md:text-5xl font-bold text-white">
-              Welcome to {siteConfig.name}
+            <span className="inline-block px-4 py-1.5 bg-[#d5b367]/10 text-[#d5b367] text-sm font-medium rounded-full border border-[#d5b367]/20 mb-6">
+              Onboarding
+            </span>
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Let&apos;s Get You Started
             </h1>
-            <p className="mt-4 text-white/60 max-w-2xl mx-auto">
-              Complete the form below to get started with your marketing journey. All fields marked with * are required.
+            <p className="text-white/60 text-lg max-w-2xl mx-auto">
+              Complete the form below to begin your journey with Marketlyn. We&apos;ll have you up and running in no time.
             </p>
           </motion.div>
 
-          {/* Section Progress Indicator */}
+          {/* Progress Indicator */}
           <motion.div
-            className="flex items-center justify-center gap-2 md:gap-4 mb-10 flex-wrap"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            className="flex items-center justify-center gap-2 mb-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
           >
-            {formSections.map((section, idx) => (
-              <div key={section.id} className="flex items-center">
-                <div
-                  className={`flex items-center gap-2 px-3 py-2 rounded-full text-xs md:text-sm transition-colors ${
-                    currentSection >= section.id
-                      ? "bg-[#d5b367]/20 text-[#d5b367] border border-[#d5b367]/30"
-                      : "bg-white/5 text-white/40 border border-white/10"
+            {sections.map((section, idx) => (
+              <div key={idx} className="flex items-center">
+                <button
+                  onClick={() => setCurrentSection(idx)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                    currentSection === idx
+                      ? "bg-[#d5b367] text-[#0a0a0a]"
+                      : "bg-white/5 text-white/50 hover:bg-white/10"
                   }`}
                 >
                   <section.icon className="w-4 h-4" />
                   <span className="hidden sm:inline">{section.title}</span>
-                </div>
-                {idx < formSections.length - 1 && (
-                  <div className={`w-4 md:w-8 h-0.5 mx-1 ${currentSection > section.id ? "bg-[#d5b367]" : "bg-white/10"}`} />
+                  <span className="sm:hidden">{idx + 1}</span>
+                </button>
+                {idx < sections.length - 1 && (
+                  <div className="w-4 h-px bg-white/20 mx-1" />
                 )}
               </div>
             ))}
           </motion.div>
 
           {/* Form */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+          <motion.form
+            onSubmit={handleSubmit}
+            className="bg-white/[0.03] border border-white/10 rounded-3xl p-8 md:p-12"
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ delay: 0.3 }}
           >
-            {error && (
-              <div className="mb-6 p-4 rounded-lg bg-red-500/20 border border-red-500/30">
-                <p className="text-red-400 text-sm">{error}</p>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Section 1: Personal Information */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-[#d5b367]/20 flex items-center justify-center">
-                    <IconUser className="w-5 h-5 text-[#d5b367]" />
-                  </div>
-                  <h2 className="text-xl font-bold text-white">Personal Information</h2>
+            {/* Section 1: Personal Information */}
+            <div className={currentSection === 0 ? "block" : "hidden"}>
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-xl bg-[#d5b367]/20 flex items-center justify-center">
+                  <IconUser className="w-5 h-5 text-[#d5b367]" />
                 </div>
+                <h2 className="text-2xl font-bold text-white">Personal Information</h2>
+              </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <InputField
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* First Name */}
+                <div>
+                  <label className="block text-sm font-medium text-white/70 mb-2">
+                    First Name <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
                     name="firstName"
-                    label="First Name"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 bg-white/5 border ${errors.firstName ? "border-red-400" : "border-white/10"} rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-[#d5b367] transition-colors`}
                     placeholder="John"
-                    icon={IconUser}
                   />
-                  <InputField
+                  {errors.firstName && <p className="text-red-400 text-sm mt-1">{errors.firstName}</p>}
+                </div>
+
+                {/* Last Name */}
+                <div>
+                  <label className="block text-sm font-medium text-white/70 mb-2">
+                    Last Name <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
                     name="lastName"
-                    label="Last Name"
-                    placeholder="Doe"
-                    icon={IconUser}
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 bg-white/5 border ${errors.lastName ? "border-red-400" : "border-white/10"} rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-[#d5b367] transition-colors`}
+                    placeholder="Smith"
                   />
-                  <InputField
-                    name="email"
-                    label="Email"
-                    type="email"
-                    placeholder="john@example.com"
-                    icon={IconMail}
-                  />
-                  <InputField
-                    name="phone"
-                    label="Phone Number"
-                    type="tel"
-                    placeholder="+1 (555) 123-4567"
-                    icon={IconPhone}
-                  />
-                  <InputField
-                    name="mls"
-                    label="MLS"
-                    placeholder="Enter your MLS"
-                    icon={IconId}
-                  />
-                  <InputField
-                    name="licenseNumber"
-                    label="License Number"
-                    placeholder="Enter license number"
-                    icon={IconLicense}
-                  />
+                  {errors.lastName && <p className="text-red-400 text-sm mt-1">{errors.lastName}</p>}
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="block text-sm font-medium text-white/70 mb-2">
+                    Email <span className="text-red-400">*</span>
+                  </label>
+                  <div className="relative">
+                    <IconMail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className={`w-full pl-12 pr-4 py-3 bg-white/5 border ${errors.email ? "border-red-400" : "border-white/10"} rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-[#d5b367] transition-colors`}
+                      placeholder="john@example.com"
+                    />
+                  </div>
+                  {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <label className="block text-sm font-medium text-white/70 mb-2">
+                    Phone Number <span className="text-red-400">*</span>
+                  </label>
+                  <div className="relative">
+                    <IconPhone className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className={`w-full pl-12 pr-4 py-3 bg-white/5 border ${errors.phone ? "border-red-400" : "border-white/10"} rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-[#d5b367] transition-colors`}
+                      placeholder="(555) 123-4567"
+                    />
+                  </div>
+                  {errors.phone && <p className="text-red-400 text-sm mt-1">{errors.phone}</p>}
+                </div>
+
+                {/* MLS */}
+                <div>
+                  <label className="block text-sm font-medium text-white/70 mb-2">
+                    MLS <span className="text-red-400">*</span>
+                  </label>
+                  <div className="relative">
+                    <IconBuilding className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+                    <input
+                      type="text"
+                      name="mls"
+                      value={formData.mls}
+                      onChange={handleInputChange}
+                      className={`w-full pl-12 pr-4 py-3 bg-white/5 border ${errors.mls ? "border-red-400" : "border-white/10"} rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-[#d5b367] transition-colors`}
+                      placeholder="Enter your MLS ID"
+                    />
+                  </div>
+                  {errors.mls && <p className="text-red-400 text-sm mt-1">{errors.mls}</p>}
+                </div>
+
+                {/* License Number */}
+                <div>
+                  <label className="block text-sm font-medium text-white/70 mb-2">
+                    License Number <span className="text-red-400">*</span>
+                  </label>
+                  <div className="relative">
+                    <IconLicense className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+                    <input
+                      type="text"
+                      name="licenseNumber"
+                      value={formData.licenseNumber}
+                      onChange={handleInputChange}
+                      className={`w-full pl-12 pr-4 py-3 bg-white/5 border ${errors.licenseNumber ? "border-red-400" : "border-white/10"} rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-[#d5b367] transition-colors`}
+                      placeholder="Enter your license number"
+                    />
+                  </div>
+                  {errors.licenseNumber && <p className="text-red-400 text-sm mt-1">{errors.licenseNumber}</p>}
                 </div>
               </div>
+            </div>
 
-              {/* Section 2: Location Information */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-[#d5b367]/20 flex items-center justify-center">
-                    <IconMapPin className="w-5 h-5 text-[#d5b367]" />
-                  </div>
-                  <h2 className="text-xl font-bold text-white">Location Information</h2>
+            {/* Section 2: Location Information */}
+            <div className={currentSection === 1 ? "block" : "hidden"}>
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-xl bg-[#d5b367]/20 flex items-center justify-center">
+                  <IconMapPin className="w-5 h-5 text-[#d5b367]" />
                 </div>
+                <h2 className="text-2xl font-bold text-white">Location Information</h2>
+              </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <InputField
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* City */}
+                <div>
+                  <label className="block text-sm font-medium text-white/70 mb-2">
+                    City <span className="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
                     name="city"
-                    label="City"
-                    placeholder="Enter your city"
-                    icon={IconMapPin}
+                    value={formData.city}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 bg-white/5 border ${errors.city ? "border-red-400" : "border-white/10"} rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-[#d5b367] transition-colors`}
+                    placeholder="Los Angeles"
                   />
-                  <SelectField
+                  {errors.city && <p className="text-red-400 text-sm mt-1">{errors.city}</p>}
+                </div>
+
+                {/* State */}
+                <div>
+                  <label className="block text-sm font-medium text-white/70 mb-2">
+                    State <span className="text-red-400">*</span>
+                  </label>
+                  <select
                     name="state"
-                    label="State"
-                    options={usStates.map(s => ({ value: s, label: s }))}
-                    placeholder="Select state"
-                  />
+                    value={formData.state}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 bg-white/5 border ${errors.state ? "border-red-400" : "border-white/10"} rounded-xl text-white focus:outline-none focus:border-[#d5b367] transition-colors appearance-none cursor-pointer`}
+                  >
+                    <option value="" className="bg-[#161616]">Select a state</option>
+                    {US_STATES.map(state => (
+                      <option key={state} value={state} className="bg-[#161616]">{state}</option>
+                    ))}
+                  </select>
+                  {errors.state && <p className="text-red-400 text-sm mt-1">{errors.state}</p>}
                 </div>
               </div>
+            </div>
 
-              {/* Section 3: Service Areas */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-[#d5b367]/20 flex items-center justify-center">
-                    <IconTarget className="w-5 h-5 text-[#d5b367]" />
-                  </div>
-                  <h2 className="text-xl font-bold text-white">Service Areas</h2>
+            {/* Section 3: Service Areas */}
+            <div className={currentSection === 2 ? "block" : "hidden"}>
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-xl bg-[#d5b367]/20 flex items-center justify-center">
+                  <IconTarget className="w-5 h-5 text-[#d5b367]" />
                 </div>
+                <h2 className="text-2xl font-bold text-white">Service Areas</h2>
+              </div>
 
-                <div className="space-y-6">
-                  {/* Primary Area */}
+              {/* Primary Area */}
+              <div className="mb-8">
+                <h3 className="text-lg font-semibold text-white mb-4">Primary Area</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <h3 className="text-sm font-semibold text-[#d5b367] mb-3">Primary Area</h3>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <InputField
+                    <label className="block text-sm font-medium text-white/70 mb-2">
+                      Primary Area <span className="text-red-400">*</span>
+                    </label>
+                    <div className="relative">
+                      <IconMap className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+                      <input
+                        type="text"
                         name="primaryArea"
-                        label="Area Name"
-                        placeholder="e.g., Downtown Los Angeles"
-                      />
-                      <SelectField
-                        name="primaryRadius"
-                        label="Servicing Radius"
-                        options={radiusOptions}
-                        placeholder="Select radius"
+                        value={formData.primaryArea}
+                        onChange={handleInputChange}
+                        className={`w-full pl-12 pr-4 py-3 bg-white/5 border ${errors.primaryArea ? "border-red-400" : "border-white/10"} rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-[#d5b367] transition-colors`}
+                        placeholder="Enter your primary area"
                       />
                     </div>
+                    {errors.primaryArea && <p className="text-red-400 text-sm mt-1">{errors.primaryArea}</p>}
                   </div>
 
-                  {/* Secondary Area */}
                   <div>
-                    <h3 className="text-sm font-semibold text-[#d5b367] mb-3">Secondary Area</h3>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <InputField
+                    <label className="block text-sm font-medium text-white/70 mb-2">
+                      Servicing Radius <span className="text-red-400">*</span>
+                    </label>
+                    <select
+                      name="primaryRadius"
+                      value={formData.primaryRadius}
+                      onChange={handleInputChange}
+                      className={`w-full px-4 py-3 bg-white/5 border ${errors.primaryRadius ? "border-red-400" : "border-white/10"} rounded-xl text-white focus:outline-none focus:border-[#d5b367] transition-colors appearance-none cursor-pointer`}
+                    >
+                      <option value="" className="bg-[#161616]">Select radius</option>
+                      {RADIUS_OPTIONS.map(option => (
+                        <option key={option.value} value={option.value} className="bg-[#161616]">{option.label}</option>
+                      ))}
+                    </select>
+                    {errors.primaryRadius && <p className="text-red-400 text-sm mt-1">{errors.primaryRadius}</p>}
+                  </div>
+                </div>
+              </div>
+
+              {/* Secondary Area */}
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-4">Secondary Area <span className="text-white/40 text-sm font-normal">(Optional)</span></h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-white/70 mb-2">
+                      Secondary Area
+                    </label>
+                    <div className="relative">
+                      <IconMap className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+                      <input
+                        type="text"
                         name="secondaryArea"
-                        label="Area Name"
-                        placeholder="e.g., Beverly Hills"
-                      />
-                      <SelectField
-                        name="secondaryRadius"
-                        label="Servicing Radius"
-                        options={radiusOptions}
-                        placeholder="Select radius"
+                        value={formData.secondaryArea}
+                        onChange={handleInputChange}
+                        className="w-full pl-12 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-[#d5b367] transition-colors"
+                        placeholder="Enter your secondary area"
                       />
                     </div>
                   </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-white/70 mb-2">
+                      Servicing Radius
+                    </label>
+                    <select
+                      name="secondaryRadius"
+                      value={formData.secondaryRadius}
+                      onChange={handleInputChange}
+                      className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-[#d5b367] transition-colors appearance-none cursor-pointer"
+                    >
+                      <option value="" className="bg-[#161616]">Select radius</option>
+                      {RADIUS_OPTIONS.map(option => (
+                        <option key={option.value} value={option.value} className="bg-[#161616]">{option.label}</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               </div>
+            </div>
 
-              {/* Section 4: Plan & Assignment */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-[#d5b367]/20 flex items-center justify-center">
-                    <IconCreditCard className="w-5 h-5 text-[#d5b367]" />
-                  </div>
-                  <h2 className="text-xl font-bold text-white">Plan & Assignment</h2>
+            {/* Section 4: Plan & Assignment */}
+            <div className={currentSection === 3 ? "block" : "hidden"}>
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-xl bg-[#d5b367]/20 flex items-center justify-center">
+                  <IconSparkles className="w-5 h-5 text-[#d5b367]" />
                 </div>
+                <h2 className="text-2xl font-bold text-white">Plan & Assignment</h2>
+              </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <InputField
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Account Manager */}
+                <div>
+                  <label className="block text-sm font-medium text-white/70 mb-2">
+                    Account Manager <span className="text-white/40 text-sm font-normal">(Optional)</span>
+                  </label>
+                  <input
+                    type="text"
                     name="accountManager"
-                    label="Account Manager"
-                    placeholder="Assigned account manager"
-                    required={false}
+                    value={formData.accountManager}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-[#d5b367] transition-colors"
+                    placeholder="Enter account manager name"
                   />
-                  <SelectField
+                </div>
+
+                {/* Select Plan */}
+                <div>
+                  <label className="block text-sm font-medium text-white/70 mb-2">
+                    Select Plan <span className="text-red-400">*</span>
+                  </label>
+                  <select
                     name="selectedPlan"
-                    label="Select Plan"
-                    options={planOptions}
-                    placeholder="Choose your plan"
-                  />
+                    value={formData.selectedPlan}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-3 bg-white/5 border ${errors.selectedPlan ? "border-red-400" : "border-white/10"} rounded-xl text-white focus:outline-none focus:border-[#d5b367] transition-colors appearance-none cursor-pointer`}
+                  >
+                    <option value="" className="bg-[#161616]">Select a plan</option>
+                    {PLAN_OPTIONS.map(option => (
+                      <option key={option.value} value={option.value} className="bg-[#161616]">{option.label}</option>
+                    ))}
+                  </select>
+                  {errors.selectedPlan && <p className="text-red-400 text-sm mt-1">{errors.selectedPlan}</p>}
                 </div>
               </div>
 
-              {/* Section 5: Addresses */}
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-[#d5b367]/20 flex items-center justify-center">
-                    <IconBuilding className="w-5 h-5 text-[#d5b367]" />
-                  </div>
-                  <h2 className="text-xl font-bold text-white">Addresses</h2>
+              {crmFromUrl && (
+                <div className="mt-6 p-4 bg-[#d5b367]/10 border border-[#d5b367]/30 rounded-xl">
+                  <p className="text-[#d5b367] text-sm font-medium">
+                    ✓ CRM Add-on ($197) will be included with your plan
+                  </p>
                 </div>
+              )}
+            </div>
 
-                <div className="space-y-4">
-                  <div className="space-y-1.5">
-                    <label className="text-sm font-medium text-white/70">Billing Address*</label>
+            {/* Section 5: Addresses */}
+            <div className={currentSection === 4 ? "block" : "hidden"}>
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 rounded-xl bg-[#d5b367]/20 flex items-center justify-center">
+                  <IconTruck className="w-5 h-5 text-[#d5b367]" />
+                </div>
+                <h2 className="text-2xl font-bold text-white">Addresses</h2>
+              </div>
+
+              <div className="space-y-6">
+                {/* Billing Address */}
+                <div>
+                  <label className="block text-sm font-medium text-white/70 mb-2">
+                    Billing Address <span className="text-red-400">*</span>
+                  </label>
+                  <div className="relative">
+                    <IconCreditCard className="absolute left-4 top-4 w-5 h-5 text-white/30" />
                     <textarea
                       name="billingAddress"
-                      required
                       value={formData.billingAddress}
                       onChange={handleInputChange}
+                      rows={3}
+                      className={`w-full pl-12 pr-4 py-3 bg-white/5 border ${errors.billingAddress ? "border-red-400" : "border-white/10"} rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-[#d5b367] transition-colors resize-none`}
                       placeholder="Enter your billing address"
-                      rows={3}
-                      className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#d5b367] focus:ring-1 focus:ring-[#d5b367] transition-colors resize-none"
                     />
                   </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-sm font-medium text-white/70">Shipping Address*</label>
-                    <textarea
-                      name="shippingAddress"
-                      required
-                      value={formData.shippingAddress}
-                      onChange={handleInputChange}
-                      placeholder="Enter your shipping address (or same as billing)"
-                      rows={3}
-                      className="w-full px-4 py-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder-white/30 focus:outline-none focus:border-[#d5b367] focus:ring-1 focus:ring-[#d5b367] transition-colors resize-none"
-                    />
-                  </div>
+                  {errors.billingAddress && <p className="text-red-400 text-sm mt-1">{errors.billingAddress}</p>}
                 </div>
-              </div>
 
-              {/* Submit Button */}
-              <div className="flex flex-col items-center gap-4">
+                {/* Same as Billing Checkbox */}
+                <label className="flex items-center gap-3 cursor-pointer group">
+                  <div className="relative">
+                    <input
+                      type="checkbox"
+                      name="sameAsBilling"
+                      checked={formData.sameAsBilling}
+                      onChange={handleInputChange}
+                      className="sr-only peer"
+                    />
+                    <div className="w-5 h-5 rounded border border-white/20 bg-white/5 peer-checked:bg-[#d5b367] peer-checked:border-[#d5b367] transition-colors flex items-center justify-center">
+                      {formData.sameAsBilling && <IconCheck className="w-3 h-3 text-[#0a0a0a]" />}
+                    </div>
+                  </div>
+                  <span className="text-white/70 text-sm">Shipping address same as billing</span>
+                </label>
+
+                {/* Shipping Address */}
+                {!formData.sameAsBilling && (
+                  <div>
+                    <label className="block text-sm font-medium text-white/70 mb-2">
+                      Shipping Address <span className="text-red-400">*</span>
+                    </label>
+                    <div className="relative">
+                      <IconTruck className="absolute left-4 top-4 w-5 h-5 text-white/30" />
+                      <textarea
+                        name="shippingAddress"
+                        value={formData.shippingAddress}
+                        onChange={handleInputChange}
+                        rows={3}
+                        className={`w-full pl-12 pr-4 py-3 bg-white/5 border ${errors.shippingAddress ? "border-red-400" : "border-white/10"} rounded-xl text-white placeholder:text-white/30 focus:outline-none focus:border-[#d5b367] transition-colors resize-none`}
+                        placeholder="Enter your shipping address"
+                      />
+                    </div>
+                    {errors.shippingAddress && <p className="text-red-400 text-sm mt-1">{errors.shippingAddress}</p>}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Navigation Buttons */}
+            <div className="flex items-center justify-between mt-10 pt-8 border-t border-white/10">
+              <button
+                type="button"
+                onClick={() => setCurrentSection(prev => Math.max(0, prev - 1))}
+                className={`flex items-center gap-2 px-6 py-3 rounded-full font-medium transition-all ${
+                  currentSection === 0
+                    ? "opacity-50 cursor-not-allowed bg-white/5 text-white/50"
+                    : "bg-white/5 text-white hover:bg-white/10"
+                }`}
+                disabled={currentSection === 0}
+              >
+                <IconArrowLeft className="w-4 h-4" />
+                Previous
+              </button>
+
+              {currentSection < sections.length - 1 ? (
+                <button
+                  type="button"
+                  onClick={() => setCurrentSection(prev => Math.min(sections.length - 1, prev + 1))}
+                  className="flex items-center gap-2 px-6 py-3 bg-[#d5b367] text-[#0a0a0a] rounded-full font-medium hover:bg-[#c9a555] transition-all"
+                >
+                  Next
+                  <IconArrowRight className="w-4 h-4" />
+                </button>
+              ) : (
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full md:w-auto flex items-center justify-center gap-2 px-12 py-4 rounded-lg bg-[#d5b367] text-[#161616] font-semibold hover:bg-[#c9a555] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 uppercase tracking-wide text-lg"
+                  className="flex items-center gap-2 px-8 py-3 bg-[#d5b367] text-[#0a0a0a] rounded-full font-medium hover:bg-[#c9a555] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="w-5 h-5 border-2 border-[#161616]/30 border-t-[#161616] rounded-full animate-spin" />
+                      <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      </svg>
                       Submitting...
                     </>
                   ) : (
                     <>
-                      <IconSend className="w-5 h-5" />
-                      Submit Application
+                      Submit
+                      <IconCheck className="w-4 h-4" />
                     </>
                   )}
                 </button>
-
-                {/* Privacy & Terms Links */}
-                <div className="flex items-center justify-center gap-2 pt-2">
-                  <Link href="/privacy" className="text-[#d5b367] text-sm hover:underline">
-                    Privacy Policy
-                  </Link>
-                  <span className="text-white/30">|</span>
-                  <Link href="/terms" className="text-[#d5b367] text-sm hover:underline">
-                    Terms of Service
-                  </Link>
-                </div>
-              </div>
-            </form>
-          </motion.div>
+              )}
+            </div>
+          </motion.form>
         </div>
       </main>
 

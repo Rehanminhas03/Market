@@ -51,7 +51,7 @@ const timeSlots = [
 
 const interestOptions = [
   "Social Media Marketing",
-  "PPC & Google Ads",
+  "Lead Generation",
   "SEO & Local Search",
   "Content Creation",
   "Video Production",

@@ -14,7 +14,7 @@ import {
 
 // Hardcoded credentials
 const VALID_USERNAME = "guest";
-const VALID_PASSWORD = "marketlyn123";
+const VALID_PASSWORD = "re123";
 
 export default function LoginPage() {
   const router = useRouter();
