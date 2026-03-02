@@ -17,23 +17,23 @@ import {
 const benefits = [
   {
     icon: IconTargetArrow,
-    badge: "Leads",
-    title: "Intent-Verified Leads",
+    badge: "Strategy",
+    title: "Targeted Campaigns",
     description:
-      "Get connected with prospects who are actively looking for your services, not cold contacts.",
+      "Reach your ideal audience with precision-targeted marketing campaigns that convert.",
     image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=90",
     accentColor: "#d5b367",
-    tags: ["Buyer Leads", "Seller Leads", "Investor Leads"],
+    tags: ["PPC Ads", "Social Media", "SEO"],
   },
   {
     icon: IconShieldCheck,
     badge: "Quality",
-    title: "Human-Verified Leads",
+    title: "Premium Content",
     description:
-      "Every lead is personally verified by our team to ensure you only connect with genuine prospects.",
+      "High-quality content created by experts that engages your audience and builds trust.",
     image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=90",
     accentColor: "#4a7c59",
-    tags: ["Manual Review", "Quality Assured", "Real Prospects"],
+    tags: ["Copywriting", "Video Production", "Graphics"],
   },
   {
     icon: IconChartBar,
@@ -43,7 +43,7 @@ const benefits = [
       "Track every metric that matters with comprehensive analytics and reporting dashboards.",
     image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=90",
     accentColor: "#4a6fa5",
-    tags: ["ROI Tracking", "Lead Scoring", "Performance"],
+    tags: ["ROI Tracking", "Performance Metrics", "Insights"],
   },
   {
     icon: IconUsers,
@@ -60,7 +60,7 @@ const benefits = [
     badge: "Efficiency",
     title: "Save Time",
     description:
-      "Automate repetitive tasks and focus on what matters most - building relationships and closing deals.",
+      "Automate repetitive tasks and focus on what matters most - growing your business.",
     image: "https://images.unsplash.com/photo-1504607798333-52a30db54a5d?w=1200&q=90",
     accentColor: "#6b5b7a",
     tags: ["Task Automation", "Smart Scheduling", "Quick Setup"],
@@ -70,7 +70,7 @@ const benefits = [
     badge: "Trust",
     title: "Proven Systems",
     description:
-      "Leverage battle-tested marketing strategies that have helped hundreds of agents succeed.",
+      "Leverage battle-tested marketing strategies that have helped hundreds of businesses succeed.",
     image: "https://images.unsplash.com/photo-1553484771-371a605b060b?w=1200&q=90",
     accentColor: "#4a7a7a",
     tags: ["Case Studies", "Testimonials", "Certifications"],

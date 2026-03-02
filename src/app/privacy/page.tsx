@@ -18,11 +18,11 @@ const sections = [
       },
       {
         title: "Business and Professional Information",
-        content: "Company details, MLS ID, service areas, business preferences, and onboarding details provided by realtors or business clients."
+        content: "Company details, industry information, service areas, business preferences, and onboarding details provided by business clients."
       },
       {
-        title: "Lead and Property Information",
-        content: "Property address, buyer or seller intent, inquiry details, and lead interaction data."
+        title: "Marketing and Campaign Information",
+        content: "Campaign preferences, target audience details, marketing goals, and interaction data."
       },
       {
         title: "Communication Data",
@@ -38,7 +38,7 @@ const sections = [
     title: "How We Use Information",
     content: "We use collected information to operate and improve our services.",
     list: [
-      "To provide digital marketing, lead generation, lead nurturing, appointment booking, and CRM services.",
+      "To provide digital marketing, campaign management, appointment booking, and CRM services.",
       "To communicate with clients, prospects, and partners.",
       "To process payments, subscriptions, and billing.",
       "To verify accounts and comply with legal and financial requirements.",
@@ -60,8 +60,16 @@ const sections = [
     content: "We do not sell or rent personal information.",
     paragraphs: [
       "We may share information with trusted third party service providers who help us operate our business. These include payment processors, CRM platforms, SMS and email providers, hosting services, analytics tools, and customer support systems.",
-      "Leads generated for clients are exclusive to the client for whom they were generated unless otherwise agreed in writing.",
+      "Campaign data and results generated for clients are exclusive to the client for whom they were generated unless otherwise agreed in writing.",
       "We may disclose information if required by law, regulation, court order, or lawful request."
+    ]
+  },
+  {
+    title: "SMS Communications",
+    content: "We collect mobile phone numbers only when voluntarily submitted by users. Phone numbers are used solely for service-related communications including lead notifications, onboarding updates, account alerts, and support messages. SMS consent is not shared with third parties or affiliates. Users may opt out at any time by replying STOP.",
+    paragraphs: [
+      "Mobile information will not be shared with third parties or affiliates for marketing or promotional purposes.",
+      "By submitting your phone number and opting in, you consent to receive SMS messages from Marketlyn. Consent is not a condition of purchase."
     ]
   },
   {
@@ -92,14 +100,6 @@ const sections = [
   {
     title: "Third Party Links",
     content: "Our website may contain links to third party websites. We are not responsible for their privacy practices or content."
-  },
-  {
-    title: "SMS Communications",
-    content: "We collect mobile phone numbers only when voluntarily submitted by users. Phone numbers are used solely for service related communications including lead notifications, onboarding updates, account alerts, and support messages. SMS consent is not shared with third parties or affiliates. Users may opt out at any time by replying STOP.",
-    paragraphs: [
-      "Mobile information will not be shared with third parties or affiliates for marketing or promotional purposes.",
-      "By submitting your phone number and opting in, you consent to receive SMS messages from Marketlyn. Consent is not a condition of purchase."
-    ]
   },
   {
     title: "Updates to This Policy",
@@ -211,10 +211,6 @@ export default function PrivacyPage() {
                   >
                     support@marketlyn.com
                   </a>
-                </p>
-                <p className="text-white">
-                  <span className="text-white/50">Address: </span>
-                  30 N Gould St Ste R, Sheridan, WY 82801
                 </p>
               </div>
             </section>

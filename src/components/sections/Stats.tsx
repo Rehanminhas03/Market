@@ -32,7 +32,7 @@ const steps = [
     icon: IconRocket,
     title: "Watch Your Business Grow",
     description:
-      "Sit back as qualified leads flow in and your pipeline fills with opportunities.",
+      "Sit back as new customers flow in and your business grows with opportunities.",
     color: "#10b981", // Emerald
   },
 ];

@@ -259,7 +259,7 @@ export const NavbarButton: React.FC<NavbarButtonProps> = ({
 
   return (
     <Link href={href} className={cn(baseStyles, variants[variant], className)}>
-      <span className="relative block overflow-hidden h-[1.2em]">
+      <span className="relative block overflow-hidden h-[1.5em]">
         {/* Original text - rolls up on hover */}
         <span className="flex items-center gap-2 transition-transform duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:-translate-y-full">
           {children}

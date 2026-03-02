@@ -11,10 +11,10 @@ const testimonials = [
   {
     type: "text",
     name: "Sarah Johnson",
-    role: "Real Estate Agent",
-    company: "Keller Williams",
+    role: "Marketing Director",
+    company: "TechStart Inc",
     content:
-      "Pro Realtify transformed my business. I went from struggling to find leads to having a consistent pipeline of qualified prospects.",
+      "Marketlyn transformed our business. We went from struggling with visibility to having a consistent pipeline of qualified prospects.",
     bgColor: "#d5b367", // Gold
     textColor: "#161616",
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face",
@@ -22,8 +22,8 @@ const testimonials = [
   {
     type: "video",
     name: "Michael Chen",
-    role: "Broker",
-    company: "RE/MAX",
+    role: "CEO",
+    company: "GrowthLab",
     thumbnail: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&h=800&fit=crop",
     videoUrl: "https://videos.pexels.com/video-files/3129671/3129671-uhd_2560_1440_30fps.mp4",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
@@ -31,8 +31,8 @@ const testimonials = [
   {
     type: "text",
     name: "Emily Rodriguez",
-    role: "Team Lead",
-    company: "Century 21",
+    role: "Founder",
+    company: "Bloom Agency",
     content:
       "They deliver real results, not just vanity metrics. My business has grown 40% since working with them.",
     bgColor: "#ffffff", // White
@@ -42,8 +42,8 @@ const testimonials = [
   {
     type: "video",
     name: "David Thompson",
-    role: "Luxury Agent",
-    company: "Berkshire Hathaway",
+    role: "VP of Marketing",
+    company: "Nexus Solutions",
     thumbnail: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=600&h=800&fit=crop",
     videoUrl: "https://videos.pexels.com/video-files/7579554/7579554-uhd_2732_1440_25fps.mp4",
     avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
@@ -51,10 +51,10 @@ const testimonials = [
   {
     type: "text",
     name: "Jessica Williams",
-    role: "Senior Agent",
-    company: "Coldwell Banker",
+    role: "Business Owner",
+    company: "Elite Services",
     content:
-      "The quality of leads I receive is exceptional. These are serious buyers ready to move.",
+      "The quality of campaigns they run is exceptional. We've seen a 3x return on our investment.",
     bgColor: "#e8d5a3", // Light gold
     textColor: "#161616",
     avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
@@ -62,8 +62,8 @@ const testimonials = [
   {
     type: "video",
     name: "Robert Martinez",
-    role: "Managing Broker",
-    company: "Sotheby's",
+    role: "Managing Director",
+    company: "Prime Consulting",
     thumbnail: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop&crop=face",
     videoUrl: "https://videos.pexels.com/video-files/8350984/8350984-uhd_2560_1440_25fps.mp4",
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
@@ -71,10 +71,10 @@ const testimonials = [
   {
     type: "text",
     name: "Amanda Foster",
-    role: "Real Estate Agent",
-    company: "eXp Realty",
+    role: "E-commerce Owner",
+    company: "StyleBox",
     content:
-      "My closing rate has increased by 60%. Their marketing strategies are on another level.",
+      "Our conversion rate has increased by 60%. Their marketing strategies are on another level.",
     bgColor: "#ffffff",
     textColor: "#161616",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop&crop=face",
@@ -82,8 +82,8 @@ const testimonials = [
   {
     type: "video",
     name: "Kevin Park",
-    role: "Team Leader",
-    company: "Compass",
+    role: "Operations Director",
+    company: "Swift Logistics",
     thumbnail: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600&h=800&fit=crop",
     videoUrl: "https://videos.pexels.com/video-files/6774496/6774496-uhd_2732_1440_25fps.mp4",
     avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face",
@@ -342,7 +342,7 @@ export default function Testimonials() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Join hundreds of satisfied real estate professionals who trust us
+            Join hundreds of satisfied businesses who trust us with their growth
           </motion.p>
         </div>
 

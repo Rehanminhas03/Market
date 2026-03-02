@@ -35,7 +35,7 @@ const services = [
     icon: IconBrandFacebook,
     title: "Social Media Marketing",
     description:
-      "Strategic campaigns across Facebook, Instagram, and LinkedIn to reach your ideal audience and generate qualified leads.",
+      "Strategic campaigns across Facebook, Instagram, and LinkedIn to reach your ideal audience and drive engagement.",
     features: ["Facebook Ads", "Instagram Marketing", "LinkedIn Outreach"],
     category: "marketing",
     image:
@@ -48,7 +48,7 @@ const services = [
     icon: IconMail,
     title: "Email Marketing",
     description:
-      "Automated email sequences that nurture leads and convert prospects into clients.",
+      "Automated email sequences that nurture prospects and convert them into loyal customers.",
     features: ["Drip Campaigns", "Newsletter Design", "A/B Testing"],
     category: "marketing",
     image:
@@ -60,8 +60,8 @@ const services = [
     icon: IconRobot,
     title: "AI Automation",
     description:
-      "Intelligent systems that work 24/7 to generate leads, qualify prospects, and automate follow-ups.",
-    features: ["Lead Scoring", "Auto Follow-up", "CRM Integration"],
+      "Intelligent systems that work 24/7 to engage prospects, qualify inquiries, and automate follow-ups.",
+    features: ["Smart Scoring", "Auto Follow-up", "CRM Integration"],
     category: "technology",
     image:
       "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80",
@@ -73,8 +73,8 @@ const services = [
     icon: IconVideo,
     title: "Video Production",
     description:
-      "Professional video content that showcases properties and builds your brand.",
-    features: ["Property Tours", "Agent Profiles", "Market Updates"],
+      "Professional video content that showcases your brand and engages your audience.",
+    features: ["Brand Videos", "Testimonials", "Product Demos"],
     category: "content",
     image:
       "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=800&q=80",
@@ -99,7 +99,7 @@ const services = [
     icon: IconSearch,
     title: "SEO & Local Search",
     description:
-      "Get found by buyers and sellers actively searching in your market area.",
+      "Get found by customers actively searching for your products and services.",
     features: ["Local SEO", "Google Business", "Review Management"],
     category: "technology",
     image:
@@ -122,14 +122,14 @@ const services = [
   },
   {
     icon: IconPhone,
-    title: "Lead Generation",
+    title: "Google & PPC Ads",
     description:
-      "Multi-channel lead generation strategies that deliver consistent, high-quality prospects.",
-    features: ["PPC Campaigns", "Landing Pages", "Lead Magnets"],
+      "Strategic paid advertising campaigns that deliver consistent, measurable results.",
+    features: ["Google Ads", "Landing Pages", "Conversion Optimization"],
     category: "marketing",
     image:
       "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80",
-    stats: { value: "77k+", label: "Leads Generated" },
+    stats: { value: "300%", label: "Avg. ROI" },
     gridClass: "md:col-span-2 md:row-span-1",
     accentColor: "#d5b367", // Gold (primary)
   },
@@ -315,7 +315,7 @@ function CategoryTab({
   return (
     <motion.button
       onClick={onClick}
-      className={`relative px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-colors whitespace-nowrap ${
+      className={`relative px-3 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-colors whitespace-nowrap ${
         isActive ? "text-[#161616]" : "text-white/60 hover:text-white"
       }`}
       whileHover={{ scale: 1.05 }}
@@ -346,7 +346,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative py-24 md:py-32 px-6 md:px-12 lg:px-16 overflow-hidden"
+      className="relative py-24 md:py-32 px-4 sm:px-6 md:px-12 lg:px-16 overflow-hidden"
       ref={ref}
     >
       {/* Background */}
@@ -387,18 +387,17 @@ export default function Services() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Comprehensive marketing solutions tailored for real estate
-          professionals
+          Comprehensive marketing solutions tailored for your business
         </motion.p>
 
         {/* Category Tabs */}
         <motion.div
-          className="flex justify-center mb-12 overflow-x-auto scrollbar-hide"
+          className="flex justify-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <div className="inline-flex gap-1 sm:gap-2 p-1.5 rounded-full bg-white/5 border border-white/10 min-w-max">
+          <div className="inline-flex gap-1 sm:gap-2 p-1 sm:p-1.5 rounded-full bg-white/5 border border-white/10">
             {categories.map((category) => (
               <CategoryTab
                 key={category.id}

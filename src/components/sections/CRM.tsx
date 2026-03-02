@@ -65,7 +65,7 @@ const ghlPerks = [
   {
     icon: IconMessageCircle,
     title: "2-Way SMS & MMS",
-    description: "Text your leads directly from the CRM with automated responses.",
+    description: "Text your clients directly from the CRM with automated responses.",
     color: "#10b981", // Emerald
   },
   {
@@ -83,7 +83,7 @@ const ghlPerks = [
   {
     icon: IconRobot,
     title: "AI-Powered Chatbot",
-    description: "24/7 lead capture and qualification with intelligent AI responses.",
+    description: "24/7 inquiry capture and qualification with intelligent AI responses.",
     color: "#06b6d4", // Cyan
   },
   {
@@ -107,7 +107,7 @@ const ghlPerks = [
   {
     icon: IconChartPie,
     title: "Advanced Analytics",
-    description: "Detailed reporting on campaigns, leads, and revenue performance.",
+    description: "Detailed reporting on campaigns, conversions, and revenue performance.",
     color: "#14b8a6", // Teal
   },
   {
@@ -130,14 +130,14 @@ const keyBenefits = [
     icon: IconClock,
     stat: "10+ Hours",
     label: "Saved Weekly",
-    description: "Automate repetitive tasks and focus on closing deals",
+    description: "Automate repetitive tasks and focus on growth",
     color: "#3b82f6", // Blue
   },
   {
     icon: IconTrendingUp,
     stat: "40%",
     label: "More Conversions",
-    description: "Convert more leads with automated follow-ups",
+    description: "Convert more prospects with automated follow-ups",
     color: "#10b981", // Emerald
   },
   {
@@ -150,17 +150,17 @@ const keyBenefits = [
   {
     icon: IconUsers,
     stat: "500+",
-    label: "Agents Using",
-    description: "Join successful real estate professionals",
+    label: "Clients Served",
+    description: "Join successful businesses worldwide",
     color: "#8b5cf6", // Purple
   },
 ];
 
-// Use Cases - How agents use the CRM
+// Use Cases - How businesses use the CRM
 const useCases = [
   {
     title: "Lead Capture & Nurturing",
-    description: "Automatically capture leads from your website, Facebook ads, and landing pages. Nurture them with personalized email and SMS sequences until they're ready to buy.",
+    description: "Automatically capture leads from your website, Facebook ads, and landing pages. Nurture them with personalized email and SMS sequences until they're ready to convert.",
     features: ["Multi-channel lead capture", "Automated drip campaigns", "Lead scoring & prioritization", "Smart follow-up reminders"],
     icon: IconTarget,
     color: "#d5b367",
@@ -173,8 +173,8 @@ const useCases = [
     color: "#8b5cf6",
   },
   {
-    title: "Appointment & Showing Management",
-    description: "Let clients book appointments online. Send automated reminders, sync with your calendar, and manage showings effortlessly.",
+    title: "Appointment Management",
+    description: "Let clients book appointments online. Send automated reminders, sync with your calendar, and manage meetings effortlessly.",
     features: ["Online booking calendar", "Automatic reminders", "Google/Outlook sync", "Group availability"],
     icon: IconCalendar,
     color: "#3b82f6",
@@ -207,8 +207,8 @@ const integrations = [
   { name: "Google Ads", icon: IconBrandGoogle },
   { name: "Instagram", icon: IconBrandInstagram },
   { name: "LinkedIn", icon: IconBrandLinkedin },
-  { name: "Zillow", icon: IconWorld },
-  { name: "Realtor.com", icon: IconWorld },
+  { name: "Shopify", icon: IconWorld },
+  { name: "WordPress", icon: IconWorld },
   { name: "Google Calendar", icon: IconCalendar },
   { name: "Stripe", icon: IconCreditCard },
 ];
@@ -261,14 +261,14 @@ export default function CRM() {
         >
           <Badge>CRM Services</Badge>
           <h2 className="mt-6 text-3xl md:text-4xl lg:text-5xl font-bold text-white">
-            Your Complete Real Estate{" "}
+            Your Complete{" "}
             <span className="bg-gradient-to-r from-[#e8d5a3] via-[#fff8e7] to-[#e8d5a3] bg-clip-text text-transparent">
               Business Hub
             </span>
           </h2>
           <p className="mt-4 text-lg text-white/60 max-w-3xl mx-auto">
             Powered by GoHighLevel – the #1 all-in-one platform trusted by 100,000+ businesses.
-            We set it up, customize it for real estate, and manage it so you can focus on closing deals.
+            We set it up, customize it for your needs, and manage it so you can focus on growth.
           </p>
         </motion.div>
 
@@ -317,7 +317,7 @@ export default function CRM() {
               Everything You Get with {siteConfig.name} CRM
             </h3>
             <p className="text-white/60 max-w-2xl mx-auto">
-              One platform to replace your entire tech stack. Powered by GoHighLevel with real estate-specific customizations.
+              One platform to replace your entire tech stack. Powered by GoHighLevel with customizations for your business.
             </p>
           </div>
 
@@ -362,10 +362,10 @@ export default function CRM() {
         >
           <div className="text-center mb-12">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
-              How Real Estate Agents Use Our CRM
+              How Businesses Use Our CRM
             </h3>
             <p className="text-white/60 max-w-2xl mx-auto">
-              See how our CRM transforms your daily workflow and helps you close more deals.
+              See how our CRM transforms your daily workflow and helps you grow faster.
             </p>
           </div>
 
@@ -630,12 +630,12 @@ export default function CRM() {
               Run Your Business From Anywhere
             </h3>
             <p className="text-white/60 mb-6">
-              The full power of your CRM in your pocket. Respond to leads instantly, manage appointments,
+              The full power of your CRM in your pocket. Respond to inquiries instantly, manage appointments,
               and close deals on the go with our mobile app for iOS and Android.
             </p>
             <ul className="space-y-3 mb-8">
               {[
-                "Instant push notifications for new leads",
+                "Instant push notifications for new inquiries",
                 "Reply to texts, emails & calls in one app",
                 "View & update your pipeline on the go",
                 "Access client info before meetings",
@@ -685,25 +685,25 @@ export default function CRM() {
             <div className="aspect-[3/4] max-w-[280px] mx-auto rounded-3xl bg-gradient-to-b from-white/10 to-white/5 border border-white/20 p-3">
               <div className="h-full rounded-2xl bg-[#0a0a0a] p-4 flex flex-col">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-white text-sm font-medium">Leads</span>
+                  <span className="text-white text-sm font-medium">Clients</span>
                   <div className="w-8 h-8 rounded-full bg-[#d5b367]/20 flex items-center justify-center">
                     <IconBell className="w-4 h-4 text-[#d5b367]" />
                   </div>
                 </div>
                 <div className="space-y-3 flex-1">
                   {[
-                    { name: "John Smith", status: "New Lead", time: "2m ago" },
-                    { name: "Sarah Johnson", status: "Showing Today", time: "1h ago" },
-                    { name: "Mike Wilson", status: "Contract Sent", time: "3h ago" },
-                  ].map((lead, i) => (
+                    { name: "John Smith", status: "New Inquiry", time: "2m ago" },
+                    { name: "Sarah Johnson", status: "Meeting Today", time: "1h ago" },
+                    { name: "Mike Wilson", status: "Proposal Sent", time: "3h ago" },
+                  ].map((client, i) => (
                     <div key={i} className="p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-[#d5b367]/20" />
                         <div className="flex-1">
-                          <p className="text-sm text-white font-medium">{lead.name}</p>
-                          <p className="text-xs text-white/50">{lead.status}</p>
+                          <p className="text-sm text-white font-medium">{client.name}</p>
+                          <p className="text-xs text-white/50">{client.status}</p>
                         </div>
-                        <span className="text-xs text-white/30">{lead.time}</span>
+                        <span className="text-xs text-white/30">{client.time}</span>
                       </div>
                     </div>
                   ))}
@@ -732,11 +732,11 @@ export default function CRM() {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            Ready to Streamline Your Real Estate Business?
+            Ready to Streamline Your Business?
           </h3>
           <p className="text-white/60 mb-8 max-w-2xl mx-auto">
-            Join hundreds of successful agents who've transformed their business with {siteConfig.name} CRM.
-            We handle the setup – you focus on selling.
+            Join hundreds of successful businesses who've transformed their operations with {siteConfig.name} CRM.
+            We handle the setup – you focus on growth.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <MagneticButton variant="primary" href="/pricing">

@@ -3,9 +3,9 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-// Brokerage logos for the marquee - using local images
+// Partner logos for the marquee - using local images
 // scale property to adjust for logos with different visual sizes
-const brokerageLogos = [
+const partnerLogos = [
   { name: "Partner 1", logo: "/logos/1.png", scale: 1 },
   { name: "Partner 2", logo: "/logos/2.png", scale: 1 },
   { name: "Partner 3", logo: "/logos/3.png", scale: 1 },
@@ -32,41 +32,41 @@ export default function LogoMarqueeSection() {
         transition={{ duration: 0.6, delay: 0.2 }}
       >
         <p className="text-sm text-white/40 text-center mb-6">
-          Trusted by agents at leading brokerages
+          Trusted by businesses across industries
         </p>
 
         {/* Logo Images Marquee */}
         <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_15%,black_85%,transparent_100%)]">
           <div className="flex w-max animate-marquee">
             {/* First set of logos */}
-            {brokerageLogos.map((brokerage, idx) => (
+            {partnerLogos.map((partner, idx) => (
               <div
                 key={`first-${idx}`}
                 className="relative h-10 w-32 mx-5 opacity-60 hover:opacity-90 transition-opacity flex-shrink-0"
               >
                 <Image
-                  src={brokerage.logo}
-                  alt={brokerage.name}
+                  src={partner.logo}
+                  alt={partner.name}
                   fill
                   className="object-contain brightness-0 invert"
                   sizes="160px"
-                  style={{ transform: `scale(${brokerage.scale})` }}
+                  style={{ transform: `scale(${partner.scale})` }}
                 />
               </div>
             ))}
             {/* Duplicate set for seamless loop */}
-            {brokerageLogos.map((brokerage, idx) => (
+            {partnerLogos.map((partner, idx) => (
               <div
                 key={`second-${idx}`}
                 className="relative h-10 w-32 mx-5 opacity-60 hover:opacity-90 transition-opacity flex-shrink-0"
               >
                 <Image
-                  src={brokerage.logo}
-                  alt={brokerage.name}
+                  src={partner.logo}
+                  alt={partner.name}
                   fill
                   className="object-contain brightness-0 invert"
                   sizes="160px"
-                  style={{ transform: `scale(${brokerage.scale})` }}
+                  style={{ transform: `scale(${partner.scale})` }}
                 />
               </div>
             ))}

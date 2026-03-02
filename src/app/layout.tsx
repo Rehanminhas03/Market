@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import AuthProvider from "@/components/AuthProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Marketlyn | AI Powered Digital Marketing for Real Estate",
-  description: "Intent-verified referrals and AI-driven marketing to grow your real estate business. Clarity. Consistency. Results.",
+  title: "Marketlyn | AI Powered Digital Marketing Agency",
+  description: "Data-driven marketing strategies to grow your business. SEO, PPC, Social Media, and more. Clarity. Consistency. Results.",
 };
 
 export default function RootLayout({
@@ -28,11 +27,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
-        <AuthProvider>
-          <div id="page-wrapper">
-            {children}
-          </div>
-        </AuthProvider>
+        <div id="page-wrapper">
+          {children}
+        </div>
       </body>
     </html>
   );

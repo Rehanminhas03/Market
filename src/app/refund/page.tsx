@@ -9,31 +9,31 @@ import Link from "next/link";
 
 const sections = [
   {
-    title: "Money-Back Guarantee on Lead Generation",
-    content: "Marketlyn LLC provides a conditional money-back guarantee tied strictly to lead delivery, lead accuracy, and exclusivity as defined below. Results, closings, revenue, or conversion outcomes are not guaranteed due to market conditions and agent-controlled follow-up.",
+    title: "Money-Back Guarantee on Marketing Services",
+    content: "Marketlyn LLC provides a conditional money-back guarantee tied strictly to service delivery and quality as defined below. Results, revenue, or conversion outcomes are not guaranteed due to market conditions and client-controlled factors.",
     paragraphs: [
       "Refunds are not automatic and are subject to verification under this Policy."
     ]
   },
   {
     title: "Refund Eligibility",
-    content: "Refunds for the sign-up fee will be considered only under the following circumstances:",
+    content: "Refunds for the service fee will be considered only under the following circumstances:",
     subsections: [
       {
-        title: "Failure to Provide Leads",
-        content: "If Marketlyn LLC fails to deliver any leads within 90 days from the execution date of the Referral Agreement."
+        title: "Failure to Deliver Services",
+        content: "If Marketlyn LLC fails to deliver the agreed-upon marketing services within 90 days from the execution date of the Service Agreement."
       },
       {
-        title: "Materially Inaccurate Lead Information",
-        content: "If a lead contains materially false or unusable information, including invalid contact details. The agent must report the issue within the required timeframe. Marketlyn LLC will first attempt to provide a replacement lead. If no replacement is provided within 30 days, the agent may request a refund."
+        title: "Significant Service Deficiencies",
+        content: "If the delivered services contain significant deficiencies that materially deviate from the agreed scope. The client must report the issue within the required timeframe. Marketlyn LLC will first attempt to rectify the issue. If not resolved within 30 days, the client may request a refund."
       },
       {
-        title: "Breach of Lead Exclusivity",
-        content: "If a lead assigned to the agent lacks primary exclusivity and is shared with another agent within Marketlyn's network."
+        title: "Technical Failures",
+        content: "If our platform or services experience prolonged technical failures (exceeding 7 consecutive days) that prevent service delivery."
       },
       {
-        title: "Leads Outside Approved Territory",
-        content: "If the agent voluntarily agrees to receive leads outside their preferred zip codes or service areas, such leads are considered accepted and are not eligible for refund or replacement."
+        title: "Scope Changes",
+        content: "If the client voluntarily agrees to changes in service scope or deliverables, such modifications are considered accepted and are not eligible for refund."
       }
     ]
   },
@@ -41,9 +41,9 @@ const sections = [
     title: "Mandatory Reporting and Timely Notification",
     content: "Proper reporting is essential for refund eligibility.",
     list: [
-      "Any concerns regarding lead accuracy, quality, or exclusivity must be reported within 48 hours of lead delivery.",
+      "Any concerns regarding service quality or delivery must be reported within 48 hours of the issue being identified.",
       "All reports must be submitted in writing to support@marketlyn.com with specific details and examples.",
-      "Failure to report issues within 48 hours constitutes acceptance of the lead, rendering it ineligible for refund or replacement."
+      "Failure to report issues within 48 hours constitutes acceptance of the services, rendering them ineligible for refund."
     ]
   },
   {
@@ -52,15 +52,15 @@ const sections = [
     subsections: [
       {
         title: "Initial Notice for Non-Delivery",
-        content: "In the event of failure to provide leads, the agent must first submit a written notice requesting delivery. If no leads are delivered within 30 days of this notice, the agent may submit a refund request."
+        content: "In the event of failure to provide services, the client must first submit a written notice requesting delivery. If services are not delivered within 30 days of this notice, the client may submit a refund request."
       },
       {
-        title: "Resolution and Replacement Period",
-        content: "For issues related to lead accuracy or exclusivity: Marketlyn LLC will attempt to replace the reported lead(s) within 30 days. If replacement is not provided within this period, a refund request may be submitted for review."
+        title: "Resolution Period",
+        content: "For issues related to service quality: Marketlyn LLC will attempt to resolve the reported issues within 30 days. If resolution is not provided within this period, a refund request may be submitted for review."
       },
       {
         title: "90-Day Commitment and Evaluation Period",
-        content: "No refunds will be processed before the completion of 90 days from the Agreement execution date. Any refund requests initiated prior to 90 days will be evaluated and processed only after the 90-day period has elapsed. This evaluation window allows leads to mature and enables proper follow-up and nurturing by the agent."
+        content: "No refunds will be processed before the completion of 90 days from the Agreement execution date. Any refund requests initiated prior to 90 days will be evaluated and processed only after the 90-day period has elapsed. This evaluation window allows campaigns to mature and enables proper assessment of results."
       }
     ]
   },
@@ -68,10 +68,10 @@ const sections = [
     title: "Chargeback and Dispute Prevention",
     content: "Please follow our refund process before initiating any disputes.",
     list: [
-      "Agents agree to follow this refund process before initiating any chargeback or payment dispute.",
+      "Clients agree to follow this refund process before initiating any chargeback or payment dispute.",
       "Initiating a chargeback without first submitting a written refund request constitutes a material breach of this Policy and the Agreement.",
       "Unauthorized chargebacks may result in immediate service termination and forfeiture of refund eligibility.",
-      "Marketlyn LLC reserves the right to submit this Policy, signed agreements, delivery logs, CRM records, and communication history to payment processors as dispute evidence."
+      "Marketlyn LLC reserves the right to submit this Policy, signed agreements, delivery logs, and communication history to payment processors as dispute evidence."
     ]
   },
   {
@@ -82,10 +82,10 @@ const sections = [
       "Refund requests must be submitted in writing to support@marketlyn.com.",
       "Marketlyn LLC reserves the right to review, validate, and approve all refund claims.",
       "Refund eligibility is strictly limited to the circumstances outlined in this Policy.",
-      "Change of mind, voluntary withdrawal, inactivity, lack of follow-up, or failure to execute the Agreement does not qualify for a refund."
+      "Change of mind, voluntary withdrawal, inactivity, or failure to execute the Agreement does not qualify for a refund."
     ],
     paragraphs: [
-      "This Refund Policy is designed to protect both parties, reduce disputes, and ensure a fair evaluation of lead generation services while maintaining full compliance with the payment processors."
+      "This Refund Policy is designed to protect both parties, reduce disputes, and ensure a fair evaluation of marketing services while maintaining full compliance with payment processors."
     ]
   }
 ];
@@ -110,10 +110,10 @@ export default function RefundPolicyPage() {
               Refund Policy
             </h1>
             <p className="mt-4 text-lg text-white/60 max-w-3xl mx-auto">
-              This Refund Policy governs the terms and conditions related to refund eligibility for the sign-up fee associated with the Referral Agreement executed with Marketlyn LLC.
+              This Refund Policy governs the terms and conditions related to refund eligibility for the service fee associated with the Service Agreement executed with Marketlyn LLC.
             </p>
             <p className="mt-4 text-sm text-white/40">
-              Effective for a period of 90 days from the date of execution of the Referral Agreement
+              Effective for a period of 90 days from the date of execution of the Service Agreement
             </p>
           </motion.div>
 
@@ -194,10 +194,6 @@ export default function RefundPolicyPage() {
                   >
                     support@marketlyn.com
                   </a>
-                </p>
-                <p className="text-white">
-                  <span className="text-white/50">Address: </span>
-                  30 N Gould St Ste R, Sheridan, WY 82801
                 </p>
               </div>
             </section>

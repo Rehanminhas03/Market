@@ -8,12 +8,12 @@ const faqs = [
   {
     question: "How quickly can I expect to see results?",
     answer:
-      "Most clients start seeing qualified leads within the first 2-4 weeks. However, building a sustainable pipeline typically takes 2-3 months of consistent effort. We'll set realistic expectations based on your market and goals.",
+      "Most clients start seeing measurable improvements within the first 2-4 weeks. However, building sustainable growth typically takes 2-3 months of consistent effort. We'll set realistic expectations based on your industry and goals.",
   },
   {
-    question: "What makes your leads different from other services?",
+    question: "What marketing services do you offer?",
     answer:
-      "Our leads are intent-verified, meaning they've taken specific actions indicating they're actively looking to buy or sell. We don't sell the same leads to multiple agents, and our AI qualification process ensures you only spend time on serious prospects.",
+      "We offer comprehensive digital marketing services including SEO, PPC advertising (Google Ads, Facebook Ads), social media marketing, content creation, email marketing, video production, and brand development. Each strategy is tailored to your specific business needs.",
   },
   {
     question: "Do you require long-term contracts?",
@@ -23,7 +23,7 @@ const faqs = [
   {
     question: "How much should I budget for marketing?",
     answer:
-      "Marketing budgets vary based on your market and goals. We typically recommend starting with $1,500-3,000/month for ad spend plus our service fee. We'll help you determine the right investment during our discovery call.",
+      "Marketing budgets vary based on your industry and goals. We typically recommend starting with $1,500-3,000/month for ad spend plus our service fee. We'll help you determine the right investment during our discovery call.",
   },
   {
     question: "Will I have a dedicated point of contact?",
@@ -31,9 +31,9 @@ const faqs = [
       "Yes! Every client is assigned a dedicated account manager who knows your business inside and out. You'll also have direct access to our team of specialists whenever you need them.",
   },
   {
-    question: "Can you work with my existing CRM?",
+    question: "Can you work with my existing tools and systems?",
     answer:
-      "Absolutely. We integrate with all major real estate CRMs including Follow Up Boss, kvCORE, BoomTown, and many others. If you use a custom solution, we can usually find a way to connect.",
+      "Absolutely. We integrate with all major CRMs, marketing platforms, and business tools including HubSpot, Salesforce, Mailchimp, and many others. If you use a custom solution, we can usually find a way to connect.",
   },
 ];
 

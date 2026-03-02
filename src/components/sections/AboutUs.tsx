@@ -23,7 +23,7 @@ const words = [
   "proven",
   "systems",
   "combine",
-  "nurturing,",
+  "strategy,",
   "digital",
   "content,",
   "and",
@@ -34,13 +34,12 @@ const words = [
   "real",
   "results",
   "for",
-  "real",
-  "estate",
-  'professionals."',
+  "ambitious",
+  'businesses."',
 ];
 
 const differentiators = [
-  { title: "Exclusive Leads", description: "Never shared with competitors" },
+  { title: "Custom Strategies", description: "Tailored for your business" },
   { title: "No Contracts", description: "Month-to-month flexibility" },
   { title: "Dedicated Support", description: "Your success is our priority" },
 ];
@@ -63,27 +62,27 @@ const features = [
   },
 ];
 
-// Array of real estate themed Unsplash images
+// Array of marketing themed Unsplash images
 const carouselImages = [
   {
-    src: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
-    alt: "House key handover",
+    src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    alt: "Digital marketing analytics",
   },
   {
-    src: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&q=80",
-    alt: "Modern real estate office",
+    src: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
+    alt: "Creative team meeting",
   },
   {
-    src: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80",
-    alt: "Luxury home interior",
+    src: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=800&q=80",
+    alt: "Marketing strategy session",
   },
   {
-    src: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
-    alt: "Modern house exterior",
+    src: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80",
+    alt: "Modern office workspace",
   },
   {
-    src: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
-    alt: "Beautiful property",
+    src: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80",
+    alt: "Business presentation",
   },
 ];
 
@@ -221,7 +220,7 @@ export default function AboutUs() {
                 }}
               >
                 <p className="text-xl font-bold">Growth Partners</p>
-                <p className="text-sm font-medium">For Real Estate Pros</p>
+                <p className="text-sm font-medium">For Your Business</p>
               </motion.div>
 
               {/* Decorative dots pattern */}
