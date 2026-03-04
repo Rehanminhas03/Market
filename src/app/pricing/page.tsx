@@ -150,8 +150,8 @@ const comparisonRows = [
 // CRM Add-on pricing
 const crmAddon = {
   name: "CRM Add-on",
-  originalPrice: "$297",
-  discountedPrice: "$197",
+  originalPrice: "$197",
+  discountedPrice: "$99",
   period: "/one-time",
   description: "Full GoHighLevel CRM access",
   features: [
@@ -190,7 +190,7 @@ const soloPlans = [
     icon: IconBolt,
     iconColor: "text-yellow-400",
     price: "$699",
-    originalPrice: "",
+    originalPrice: "$897",
     period: "/one-time",
     tagline: "Be the agent prospects see and speak to first.",
     bestFor: "Agents ready to move from average exposure to local dominance.",
@@ -213,7 +213,7 @@ const soloPlans = [
     icon: IconDiamond,
     iconColor: "text-emerald-400",
     price: "$999",
-    originalPrice: "",
+    originalPrice: "$1,295",
     period: "/one-time",
     tagline: "Designed for agents who expect efficiency.",
     bestFor: "High performers who want leads closer to decision-making.",
@@ -935,7 +935,7 @@ export default function PricingPage() {
                           <span className="text-sm font-medium text-white">Add CRM</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="text-xs text-white/40 line-through">{crmAddon.originalPrice}</span>
+                          {crmAddon.originalPrice && <span className="text-xs text-white/40 line-through">{crmAddon.originalPrice}</span>}
                           <span className="text-sm font-bold text-[#d5b367]">{crmAddon.discountedPrice}</span>
                         </div>
                       </div>
@@ -961,7 +961,7 @@ export default function PricingPage() {
                         </div>
                         <div>
                           <p className="text-sm font-medium text-[#d5b367]">CRM Included Free!</p>
-                          <p className="text-xs text-white/50">$297 value included at no extra cost</p>
+                          <p className="text-xs text-white/50">$197 value included at no extra cost</p>
                         </div>
                       </div>
                     </div>

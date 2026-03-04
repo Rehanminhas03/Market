@@ -229,18 +229,28 @@ export default function OnboardingPage() {
                 <IconCheck className="w-10 h-10 text-emerald-400" />
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                Thank You!
+                Submission Received!
               </h1>
-              <p className="text-white/60 text-lg mb-8">
-                Your onboarding form has been submitted successfully. Our team will review your information and reach out to you within 24-48 hours.
+              <p className="text-white/60 text-lg mb-4">
+                Thank you for your submission. Our team will review your information and get in touch within 24-48 hours.
               </p>
-              <Link
-                href="/"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-[#d5b367] text-[#0a0a0a] font-medium rounded-full hover:bg-[#c9a555] transition-colors"
-              >
-                Back to Home
-                <IconArrowRight className="w-4 h-4" />
-              </Link>
+              <p className="text-white/50 text-base mb-8">
+                A confirmation email has been sent to <span className="text-[#d5b367]">support@marketlyn.com</span>
+              </p>
+              <div className="flex items-center justify-center gap-4">
+                <Link
+                  href="/"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#d5b367] text-[#0a0a0a] font-medium rounded-full hover:bg-[#c9a555] transition-colors"
+                >
+                  Return Home
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 text-white font-medium rounded-full hover:bg-white/20 transition-colors"
+                >
+                  Contact Us
+                </Link>
+              </div>
             </motion.div>
           </div>
         </main>
