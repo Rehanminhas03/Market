@@ -1,4 +1,4 @@
-import { SquareClient, SquareEnvironment } from "square";
+import { SquareClient, SquareEnvironment, Currency } from "square";
 import { getPlanPrice, getPlanDisplayName, CRM_ADDON_PRICE } from "@/config/prices";
 import crypto from "crypto";
 
@@ -57,7 +57,7 @@ export const createCheckoutLink = async (
       quantity: "1",
       basePriceMoney: {
         amount: BigInt(planPrice),
-        currency: "USD",
+        currency: Currency.Usd,
       },
     },
   ];
@@ -69,7 +69,7 @@ export const createCheckoutLink = async (
       quantity: "1",
       basePriceMoney: {
         amount: BigInt(CRM_ADDON_PRICE),
-        currency: "USD",
+        currency: Currency.Usd,
       },
     });
   }
@@ -126,8 +126,8 @@ export const verifyPayment = async (orderId: string): Promise<PaymentVerificatio
 
   try {
     // Get the order details
-    const orderResponse = await client.orders.get(orderId);
-    const order = orderResponse;
+    const orderResponse = await client.orders.get({ orderId });
+    const order = orderResponse.order;
 
     if (!order) {
       return {
@@ -155,8 +155,8 @@ export const verifyPayment = async (orderId: string): Promise<PaymentVerificatio
       const tender = order.tenders[0];
       if (tender.customerId) {
         try {
-          const customerResponse = await client.customers.get(tender.customerId);
-          customerEmail = customerResponse.emailAddress;
+          const customerResponse = await client.customers.get({ customerId: tender.customerId });
+          customerEmail = customerResponse.customer?.emailAddress ?? undefined;
         } catch {
           // Customer email not available
         }
@@ -214,7 +214,7 @@ export const getPaymentDetails = async (paymentId: string) => {
   const client = getSquareClient();
 
   try {
-    const response = await client.payments.get(paymentId);
+    const response = await client.payments.get({ paymentId });
     return response;
   } catch (error) {
     console.error("Error fetching payment details:", error);

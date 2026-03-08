@@ -8,7 +8,6 @@ import Image from "next/image";
 const brokerageLogos = [
   { name: "Partner 1", logo: "/logos/1.png", scale: 1 },
   { name: "Partner 2", logo: "/logos/2.png", scale: 1 },
-  { name: "Partner 3", logo: "/logos/3.png", scale: 1 },
   { name: "Partner 4", logo: "/logos/4.png", scale: 1 },
   { name: "Partner 5", logo: "/logos/5.png", scale: 1 },
   { name: "Partner 6", logo: "/logos/6.png", scale: 1.3 },

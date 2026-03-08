@@ -16,7 +16,19 @@ const AuthContext = createContext<AuthContextType>({
 export const useAuth = () => useContext(AuthContext);
 
 // Pages that don't require authentication
-const publicPages = ["/login"];
+const publicPages = [
+  "/login",
+  "/",
+  "/pricing",
+  "/contact",
+  "/agent-profile",
+  "/privacy",
+  "/terms",
+  "/refund",
+  "/payment-success",
+  "/payment-cancelled",
+  "/onboarding",
+];
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

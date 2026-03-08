@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
  * Handle payment.completed webhook
  */
 async function handlePaymentCompleted(data: Record<string, unknown>) {
-  const payment = data.object?.payment as Record<string, unknown> | undefined;
+  const payment = (data.object as Record<string, unknown>)?.payment as Record<string, unknown> | undefined;
   if (!payment) return;
 
   const paymentId = payment.id as string;
@@ -86,7 +86,7 @@ async function handlePaymentCompleted(data: Record<string, unknown>) {
  * Handle payment.updated webhook
  */
 async function handlePaymentUpdated(data: Record<string, unknown>) {
-  const payment = data.object?.payment as Record<string, unknown> | undefined;
+  const payment = (data.object as Record<string, unknown>)?.payment as Record<string, unknown> | undefined;
   if (!payment) return;
 
   const paymentId = payment.id as string;
@@ -105,7 +105,7 @@ async function handlePaymentUpdated(data: Record<string, unknown>) {
  * Handle order.fulfillment.updated webhook
  */
 async function handleOrderFulfillmentUpdated(data: Record<string, unknown>) {
-  const order = data.object?.order as Record<string, unknown> | undefined;
+  const order = (data.object as Record<string, unknown>)?.order as Record<string, unknown> | undefined;
   if (!order) return;
 
   const orderId = order.id as string;
