@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
@@ -19,10 +19,19 @@ import {
   IconArrowRight,
   IconArrowLeft,
   IconSparkles,
+  IconLoader2,
+  IconAlertCircle,
+  IconLock,
+  IconSearch,
+  IconHeadset,
+  IconSettings,
+  IconStar,
 } from "@tabler/icons-react";
 import NavbarDemo from "@/components/Navbar";
 import Footer from "@/components/sections/Footer";
 import ScrollProgress from "@/components/ui/scroll-progress";
+import siteConfig from "@/config/site.json";
+import { getPlanDisplayName, formatPrice, getPlanPrice } from "@/config/prices";
 
 // US States
 const US_STATES = [
@@ -79,6 +88,9 @@ interface FormData {
 
 export default function OnboardingPage() {
   const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const tokenFromUrl = searchParams.get("token");
   const planFromUrl = searchParams.get("plan") || "";
   const crmFromUrl = searchParams.get("crm") === "true";
 
@@ -107,12 +119,58 @@ export default function OnboardingPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [currentSection, setCurrentSection] = useState(0);
 
-  // Update plan from URL when component mounts
+  // Payment verification state
+  const [isVerifying, setIsVerifying] = useState(true);
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [verificationError, setVerificationError] = useState("");
+
+  // Verify payment token on mount
   useEffect(() => {
-    if (planFromUrl) {
+    const verifyToken = async () => {
+      // If no token, user hasn't paid - redirect to pricing
+      if (!tokenFromUrl) {
+        setIsVerifying(false);
+        setIsAuthorized(false);
+        setVerificationError("Payment required to access onboarding.");
+        return;
+      }
+
+      try {
+        // Verify the token with our API
+        const response = await fetch("/api/payments/verify-token", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: tokenFromUrl }),
+        });
+
+        const data = await response.json();
+
+        if (data.valid) {
+          setIsAuthorized(true);
+          // Set form data from token payload
+          if (data.payload?.plan) {
+            setFormData(prev => ({ ...prev, selectedPlan: data.payload.plan }));
+          }
+        } else {
+          setVerificationError(data.error || "Invalid or expired access. Please complete payment first.");
+        }
+      } catch (error) {
+        console.error("Token verification error:", error);
+        setVerificationError("Unable to verify access. Please try again.");
+      } finally {
+        setIsVerifying(false);
+      }
+    };
+
+    verifyToken();
+  }, [tokenFromUrl]);
+
+  // Update plan from URL when component mounts (fallback for authorized users)
+  useEffect(() => {
+    if (planFromUrl && isAuthorized) {
       setFormData(prev => ({ ...prev, selectedPlan: planFromUrl }));
     }
-  }, [planFromUrl]);
+  }, [planFromUrl, isAuthorized]);
 
   // Handle same as billing checkbox
   useEffect(() => {
@@ -212,7 +270,8 @@ export default function OnboardingPage() {
     { title: "Addresses", icon: IconTruck },
   ];
 
-  if (isSubmitted) {
+  // Show loading state while verifying token
+  if (isVerifying) {
     return (
       <div className="min-h-screen bg-[#0a0a0a]">
         <ScrollProgress />
@@ -225,18 +284,171 @@ export default function OnboardingPage() {
               transition={{ duration: 0.5 }}
               className="bg-white/[0.03] border border-white/10 rounded-3xl p-12"
             >
-              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                <IconCheck className="w-10 h-10 text-emerald-400" />
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#d5b367]/20 flex items-center justify-center">
+                <IconLoader2 className="w-10 h-10 text-[#d5b367] animate-spin" />
               </div>
               <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                Submission Received!
+                Verifying Access...
+              </h1>
+              <p className="text-white/60 text-lg">
+                Please wait while we verify your payment.
+              </p>
+            </motion.div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Show error state if not authorized
+  if (!isAuthorized) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0a]">
+        <ScrollProgress />
+        <NavbarDemo />
+        <main className="relative pt-32 pb-20 px-4">
+          <div className="max-w-2xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white/[0.03] border border-white/10 rounded-3xl p-12"
+            >
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-orange-500/20 flex items-center justify-center">
+                <IconLock className="w-10 h-10 text-orange-400" />
+              </div>
+              <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Payment Required
               </h1>
               <p className="text-white/60 text-lg mb-4">
-                Thank you for your submission. Our team will review your information and get in touch within 24-48 hours.
+                {verificationError || "Please complete payment to access onboarding."}
               </p>
               <p className="text-white/50 text-base mb-8">
-                A confirmation email has been sent to <span className="text-[#d5b367]">support@marketlyn.com</span>
+                Select a plan and complete your payment to continue.
               </p>
+              <div className="flex items-center justify-center gap-4">
+                <Link
+                  href="/pricing"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-[#d5b367] text-[#0a0a0a] font-medium rounded-full hover:bg-[#c9a555] transition-colors"
+                >
+                  View Plans
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 text-white font-medium rounded-full hover:bg-white/20 transition-colors"
+                >
+                  Contact Support
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (isSubmitted) {
+    const displayPlan = getPlanDisplayName(formData.selectedPlan || planFromUrl);
+    const planPriceValue = getPlanPrice(formData.selectedPlan || planFromUrl, crmFromUrl);
+
+    const timelineSteps = [
+      { icon: IconSearch, title: "Team Review", description: "Our team will review your submission within 24-48 hours", time: "24-48 hours" },
+      { icon: IconHeadset, title: "Account Manager Call", description: "Your dedicated account manager will reach out to discuss your goals", time: "2-3 days" },
+      { icon: IconSettings, title: "Service Setup", description: "We'll configure your service areas and activate your account", time: "3-5 days" },
+      { icon: IconStar, title: "Start Receiving Referrals", description: "Begin getting exclusive referrals in your target areas!", time: "Within 1 week" },
+    ];
+
+    return (
+      <div className="min-h-screen bg-[#0a0a0a]">
+        <ScrollProgress />
+        <NavbarDemo />
+        <main className="relative pt-32 pb-20 px-4">
+          <div className="max-w-2xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="bg-white/[0.03] border border-white/10 rounded-3xl p-8 md:p-12"
+            >
+              {/* Success Header */}
+              <div className="text-center mb-8">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                  <IconCheck className="w-10 h-10 text-emerald-400" />
+                </div>
+                <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                  Welcome to Marketlyn!
+                </h1>
+                <p className="text-white/60 text-lg">
+                  Your onboarding is complete, {formData.firstName || "there"}!
+                </p>
+              </div>
+
+              {/* Plan Summary Card */}
+              <div className="bg-gradient-to-r from-[#d5b367]/10 to-[#c9a555]/5 border border-[#d5b367]/20 rounded-xl p-5 mb-8">
+                <div className="flex items-center justify-between flex-wrap gap-3">
+                  <div>
+                    <p className="text-white/50 text-sm mb-1">Your Plan</p>
+                    <p className="text-white font-semibold text-lg">{displayPlan}</p>
+                    {crmFromUrl && (
+                      <span className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 bg-[#d5b367]/20 text-[#d5b367] text-xs rounded-full">
+                        <IconCheck className="w-3 h-3" /> CRM Included
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[#d5b367] text-2xl font-bold">{formatPrice(planPriceValue)}</p>
+                    <p className="text-white/40 text-xs">One-time payment</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Timeline */}
+              <div className="mb-8">
+                <h3 className="text-white font-semibold text-lg mb-5">What Happens Next?</h3>
+                <div className="space-y-0">
+                  {timelineSteps.map((step, idx) => (
+                    <div key={idx} className="flex gap-4">
+                      <div className="flex flex-col items-center">
+                        <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
+                          <step.icon className="w-5 h-5 text-[#d5b367]" />
+                        </div>
+                        {idx < timelineSteps.length - 1 && (
+                          <div className="w-px h-full min-h-[32px] bg-white/10 my-1" />
+                        )}
+                      </div>
+                      <div className="pb-6">
+                        <p className="text-white font-medium">{step.title}</p>
+                        <p className="text-white/50 text-sm mt-0.5">{step.description}</p>
+                        <span className="text-[#d5b367]/70 text-xs">{step.time}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Email Reminder */}
+              <div className="bg-white/5 rounded-xl p-4 mb-8 flex items-start gap-3">
+                <IconMail className="w-5 h-5 text-[#d5b367] mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="text-white text-sm font-medium">Check your email</p>
+                  <p className="text-white/50 text-sm">
+                    A confirmation has been sent to <span className="text-[#d5b367]">{formData.email}</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* Contact Info */}
+              <div className="text-center text-white/40 text-sm mb-8">
+                <p>Questions? Reach us at{" "}
+                  <a href={`mailto:${siteConfig.email}`} className="text-[#d5b367] hover:underline">{siteConfig.email}</a>
+                  {" "}or{" "}
+                  <a href={`tel:${siteConfig.phone}`} className="text-[#d5b367] hover:underline">{siteConfig.phone}</a>
+                </p>
+              </div>
+
+              {/* Action Buttons */}
               <div className="flex items-center justify-center gap-4">
                 <Link
                   href="/"

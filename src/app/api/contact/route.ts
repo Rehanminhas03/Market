@@ -14,19 +14,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create transporter using Gmail SMTP
+    // Create transporter using Zoho SMTP
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.zoho.com",
+      port: 465,
+      secure: true,
       auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS, // Use App Password, not regular password
+        pass: process.env.EMAIL_PASS,
       },
     });
 
     // Email content for you (the receiver)
     const mailOptionsToAdmin = {
       from: process.env.EMAIL_USER,
-      to: "minhasrehan96@gmail.com",
+      to: process.env.EMAIL_USER,
       subject: `New Contact Form Submission from ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #f9f9f9;">

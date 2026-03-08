@@ -105,13 +105,16 @@ export async function POST(request: NextRequest) {
     try {
       await appendToGoogleSheet(sheetData);
     } catch (sheetError) {
-      console.error("Google Sheets error:", sheetError);
+      console.error("Google Sheets error:", sheetError instanceof Error ? sheetError.message : sheetError);
+      console.error("Google Sheets full error:", JSON.stringify(sheetError, null, 2));
       // Continue with email even if Google Sheets fails
     }
 
-    // Create email transporter
+    // Create email transporter (Zoho SMTP)
     const transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.zoho.com",
+      port: 465,
+      secure: true,
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
@@ -119,7 +122,7 @@ export async function POST(request: NextRequest) {
     });
 
     const planDisplayName = PLAN_NAMES[selectedPlan] || selectedPlan;
-    const crmNote = includeCRM ? " + CRM Add-on ($197)" : "";
+    const crmNote = includeCRM ? " + CRM Add-on ($99)" : "";
 
     // Admin notification email
     const adminMailOptions = {
@@ -211,7 +214,7 @@ export async function POST(request: NextRequest) {
               ${includeCRM ? `
               <tr>
                 <td style="padding: 8px 0; color: #666; font-weight: bold;">CRM Add-on:</td>
-                <td style="padding: 8px 0; color: #d5b367; font-weight: bold;">Yes ($197)</td>
+                <td style="padding: 8px 0; color: #d5b367; font-weight: bold;">Yes ($99)</td>
               </tr>
               ` : ""}
               <tr>
