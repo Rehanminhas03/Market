@@ -102,8 +102,10 @@ export async function POST(request: NextRequest) {
     ];
 
     // Append to Google Sheets (if configured)
+    let sheetSaved = false;
     try {
       await appendToGoogleSheet(sheetData);
+      sheetSaved = true;
     } catch (sheetError) {
       console.error("Google Sheets error:", sheetError instanceof Error ? sheetError.message : sheetError);
       console.error("Google Sheets full error:", JSON.stringify(sheetError, null, 2));
@@ -305,7 +307,12 @@ export async function POST(request: NextRequest) {
     await transporter.sendMail(userMailOptions);
 
     return NextResponse.json(
-      { message: "Onboarding submitted successfully" },
+      {
+        message: sheetSaved
+          ? "Onboarding submitted successfully"
+          : "Onboarding submitted but data backup encountered an issue. Our team has been notified.",
+        sheetSaved,
+      },
       { status: 200 }
     );
   } catch (error) {

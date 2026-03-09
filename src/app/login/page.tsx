@@ -33,10 +33,23 @@ export default function LoginPage() {
     await new Promise((resolve) => setTimeout(resolve, 800));
 
     if (username === VALID_USERNAME && password === VALID_PASSWORD) {
-      // Set session storage to indicate logged in (clears when tab is closed)
-      sessionStorage.setItem("isAuthenticated", "true");
-      // Full page reload so AuthProvider re-reads sessionStorage on mount
-      window.location.href = "/";
+      try {
+        // Set session storage to indicate logged in (clears when tab is closed)
+        sessionStorage.setItem("isAuthenticated", "true");
+        // Verify the write actually persisted (can fail in restricted storage modes)
+        const verified = sessionStorage.getItem("isAuthenticated");
+        if (verified !== "true") {
+          throw new Error("Storage write failed");
+        }
+        // Small delay to ensure storage is flushed before navigation
+        setTimeout(() => {
+          // Full page reload so AuthProvider re-reads sessionStorage on mount
+          window.location.href = "/";
+        }, 100);
+      } catch {
+        setError("Unable to save login state. Please ensure cookies/storage are enabled and try again.");
+        setIsLoading(false);
+      }
     } else {
       setError("Invalid username or password");
       setIsLoading(false);

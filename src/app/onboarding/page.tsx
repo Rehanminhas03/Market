@@ -90,9 +90,10 @@ export default function OnboardingPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  const tokenFromUrl = searchParams.get("token");
-  const planFromUrl = searchParams.get("plan") || "";
-  const crmFromUrl = searchParams.get("crm") === "true";
+  // Try URL params first, fall back to sessionStorage backup (set by payment-success page)
+  const tokenFromUrl = searchParams.get("token") || (typeof window !== "undefined" ? sessionStorage.getItem("onboarding_token") : null);
+  const planFromUrl = searchParams.get("plan") || (typeof window !== "undefined" ? sessionStorage.getItem("onboarding_plan") : null) || "";
+  const crmFromUrl = (searchParams.get("crm") || (typeof window !== "undefined" ? sessionStorage.getItem("onboarding_crm") : null)) === "true";
 
   const [formData, setFormData] = useState<FormData>({
     firstName: "",

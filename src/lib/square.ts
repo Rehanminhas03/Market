@@ -19,9 +19,10 @@ const getSquareClient = (): SquareClient => {
   });
 };
 
-// Get the base URL for redirects
+// Get the base URL for redirects (strip trailing slash for safety)
 const getBaseUrl = (): string => {
-  return process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const url = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  return url.replace(/\/+$/, "");
 };
 
 interface CheckoutLinkResult {

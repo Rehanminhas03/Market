@@ -440,14 +440,26 @@ export default function PricingPage() {
     setPortalRoot(document.body);
   }, []);
 
+  const scrollYRef = useRef(0);
+
   const openReviewModal = (planName: string, includeCRM: boolean) => {
     setReviewModal({ isOpen: true, planName, includeCRM });
+    // Lock scroll — use position:fixed trick for iOS Safari compatibility
+    scrollYRef.current = window.scrollY;
     document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.width = "100%";
+    document.body.style.top = `-${scrollYRef.current}px`;
   };
 
   const closeReviewModal = () => {
-    setReviewModal({ isOpen: false, planName: "", includeCRM: false });
+    // Restore scroll position
     document.body.style.overflow = "";
+    document.body.style.position = "";
+    document.body.style.width = "";
+    document.body.style.top = "";
+    window.scrollTo(0, scrollYRef.current);
+    setReviewModal({ isOpen: false, planName: "", includeCRM: false });
   };
 
   const getReviewPlan = () => {
@@ -462,7 +474,7 @@ export default function PricingPage() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Reset loading state when user navigates back (bfcache restore)
+  // Reset loading state when user navigates back (bfcache restore or visibility change)
   useEffect(() => {
     const handlePageShow = (e: PageTransitionEvent) => {
       if (e.persisted) {
@@ -470,8 +482,33 @@ export default function PricingPage() {
         closeReviewModal();
       }
     };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        // If we were mid-checkout when the page became hidden, reset on return
+        const wasInCheckout = sessionStorage.getItem("payment_in_progress");
+        if (wasInCheckout) {
+          sessionStorage.removeItem("payment_in_progress");
+          setIsCheckoutLoading(null);
+          closeReviewModal();
+        }
+      }
+    };
+
+    // Check on mount if we were mid-checkout (handles fresh page load after back)
+    const wasInCheckout = sessionStorage.getItem("payment_in_progress");
+    if (wasInCheckout) {
+      sessionStorage.removeItem("payment_in_progress");
+      setIsCheckoutLoading(null);
+      closeReviewModal();
+    }
+
     window.addEventListener("pageshow", handlePageShow);
-    return () => window.removeEventListener("pageshow", handlePageShow);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      window.removeEventListener("pageshow", handlePageShow);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -497,6 +534,8 @@ export default function PricingPage() {
       const data = await response.json();
 
       if (data.success && data.checkoutUrl) {
+        // Mark that we're in checkout so we can recover on back button
+        sessionStorage.setItem("payment_in_progress", "true");
         // Redirect to Square checkout
         window.location.href = data.checkoutUrl;
       } else {
@@ -1372,10 +1411,20 @@ export default function PricingPage() {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, y: 20 }}
                   transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                  className="bg-[#161616] border border-white/10 rounded-2xl p-4 sm:p-8 max-w-md w-full shadow-2xl overflow-y-auto"
+                  className="relative bg-[#161616] border border-white/10 rounded-2xl p-4 sm:p-8 max-w-md w-full shadow-2xl overflow-y-auto"
                   style={{ maxHeight: "calc(100dvh - 2rem)" }}
                   onClick={(e) => e.stopPropagation()}
                 >
+                  {/* Close Button */}
+                  {!isLoading && (
+                    <button
+                      onClick={closeReviewModal}
+                      className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white/60 hover:text-white transition-colors z-10"
+                      aria-label="Close"
+                    >
+                      <IconX className="w-4 h-4" />
+                    </button>
+                  )}
                   {/* Plan Header */}
                   <div className="flex items-center gap-3 mb-2">
                     <div className={`w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center ${plan.iconColor}`}>

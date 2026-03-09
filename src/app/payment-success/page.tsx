@@ -18,11 +18,26 @@ function PaymentSuccessContent() {
   const [status, setStatus] = useState<VerificationStatus>("verifying");
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Square redirects with these parameters
-  const transactionId = searchParams.get("transactionId");
-  const orderId = searchParams.get("orderId");
+  // Square redirects with these parameters (check alternate param names for resilience)
+  const transactionId = searchParams.get("transactionId") || searchParams.get("transaction_id") || searchParams.get("referenceId");
+  const orderId = searchParams.get("orderId") || searchParams.get("order_id") || searchParams.get("checkoutId");
 
   useEffect(() => {
+    const verifyWithRetry = async (id: string, attempts = 3): Promise<Record<string, unknown>> => {
+      for (let i = 0; i < attempts; i++) {
+        const response = await fetch("/api/payments/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ orderId: id }),
+        });
+        const data = await response.json();
+        if (data.verified) return data;
+        // Wait before retrying (Square may have a delay before order is COMPLETED)
+        if (i < attempts - 1) await new Promise(r => setTimeout(r, 2000));
+      }
+      return { verified: false };
+    };
+
     const verifyPayment = async () => {
       // Need at least orderId to verify
       if (!orderId) {
@@ -32,31 +47,32 @@ function PaymentSuccessContent() {
       }
 
       try {
-        const response = await fetch("/api/payments/verify", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ orderId }),
-        });
-
-        const data = await response.json();
+        const data = await verifyWithRetry(orderId);
 
         if (data.verified && data.accessToken) {
           setStatus("success");
 
+          // Store token in sessionStorage as backup so user can return to onboarding
+          try {
+            sessionStorage.setItem("onboarding_token", data.accessToken as string);
+            sessionStorage.setItem("onboarding_plan", (data.plan as string) || "");
+            sessionStorage.setItem("onboarding_crm", data.includeCRM ? "true" : "false");
+          } catch {
+            // Storage may be unavailable, continue anyway
+          }
+
           // Wait a moment to show success, then redirect to onboarding
           setTimeout(() => {
             const params = new URLSearchParams({
-              token: data.accessToken,
-              plan: data.plan,
+              token: data.accessToken as string,
+              plan: (data.plan as string) || "",
               crm: data.includeCRM ? "true" : "false",
             });
             router.push(`/onboarding?${params.toString()}`);
           }, 2000);
         } else {
           setStatus("error");
-          setErrorMessage(data.error || "Payment verification failed.");
+          setErrorMessage((data.error as string) || "Payment verification failed. Your payment may still be processing — please wait a moment and refresh this page.");
         }
       } catch (error) {
         console.error("Verification error:", error);
