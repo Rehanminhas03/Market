@@ -21,7 +21,7 @@ const benefits = [
     title: "Intent-Verified Leads",
     description:
       "Get connected with prospects who are actively looking for your services, not cold contacts.",
-    image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1200&q=90",
+    image: "https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2070&auto=format&fit=crop",
     accentColor: "#d5b367",
     tags: ["Buyer Leads", "Seller Leads", "Investor Leads"],
   },
@@ -31,7 +31,7 @@ const benefits = [
     title: "Human-Verified Leads",
     description:
       "Every lead is personally verified by our team to ensure you only connect with genuine prospects.",
-    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&q=90",
+    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=2070&auto=format&fit=crop",
     accentColor: "#4a7c59",
     tags: ["Manual Review", "Quality Assured", "Real Prospects"],
   },
@@ -41,7 +41,7 @@ const benefits = [
     title: "Data-Driven Results",
     description:
       "Track every metric that matters with comprehensive analytics and reporting dashboards.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&q=90",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop",
     accentColor: "#4a6fa5",
     tags: ["ROI Tracking", "Lead Scoring", "Performance"],
   },
@@ -51,7 +51,7 @@ const benefits = [
     title: "Dedicated Support",
     description:
       "Work with a dedicated team that understands your business and helps you succeed.",
-    image: "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=1200&q=90",
+    image: "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?q=80&w=2070&auto=format&fit=crop",
     accentColor: "#8b7355",
     tags: ["Account Manager", "Strategy Calls", "Priority Support"],
   },
@@ -61,7 +61,7 @@ const benefits = [
     title: "Save Time",
     description:
       "Automate repetitive tasks and focus on what matters most - building relationships and closing deals.",
-    image: "https://images.unsplash.com/photo-1504607798333-52a30db54a5d?w=1200&q=90",
+    image: "https://images.unsplash.com/photo-1504607798333-52a30db54a5d?q=80&w=2070&auto=format&fit=crop",
     accentColor: "#6b5b7a",
     tags: ["Task Automation", "Smart Scheduling", "Quick Setup"],
   },
@@ -71,7 +71,7 @@ const benefits = [
     title: "Proven Systems",
     description:
       "Leverage battle-tested marketing strategies that have helped hundreds of agents succeed.",
-    image: "https://images.unsplash.com/photo-1553484771-371a605b060b?w=1200&q=90",
+    image: "https://images.unsplash.com/photo-1553484771-371a605b060b?q=80&w=2070&auto=format&fit=crop",
     accentColor: "#4a7a7a",
     tags: ["Case Studies", "Testimonials", "Certifications"],
   },

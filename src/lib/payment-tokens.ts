@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
-// Token expiration time (15 minutes)
-const TOKEN_EXPIRATION = "15m";
+// Token expiration time (1 hour - gives users enough time to complete onboarding)
+const TOKEN_EXPIRATION = "1h";
 
 // Get JWT secret from environment or use a default for development
 const getJwtSecret = (): string => {

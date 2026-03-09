@@ -16,15 +16,9 @@ const AuthContext = createContext<AuthContextType>({
 export const useAuth = () => useContext(AuthContext);
 
 // Pages that don't require authentication
+// Only login and payment flow pages are public — everything else requires login
 const publicPages = [
   "/login",
-  "/",
-  "/pricing",
-  "/contact",
-  "/agent-profile",
-  "/privacy",
-  "/terms",
-  "/refund",
   "/payment-success",
   "/payment-cancelled",
   "/onboarding",
@@ -43,11 +37,19 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     const authStatus = sessionStorage.getItem("isAuthenticated");
     setIsAuthenticated(authStatus === "true");
     setIsLoading(false);
+
+    // Listen for storage changes from other components (e.g., login page using router.push)
+    const handleStorage = () => {
+      const status = sessionStorage.getItem("isAuthenticated");
+      setIsAuthenticated(status === "true");
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
   }, []);
 
   useEffect(() => {
     if (!isLoading) {
-      const isPublicPage = publicPages.includes(pathname);
+      const isPublicPage = publicPages.some(p => pathname === p || (p !== "/" && pathname.startsWith(p + "/")));
 
       if (!isAuthenticated && !isPublicPage) {
         // Redirect to login if not authenticated and trying to access protected page
@@ -83,7 +85,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   // Don't render protected content if not authenticated (except for public pages)
-  const isPublicPage = publicPages.includes(pathname);
+  const isPublicPage = publicPages.some(p => pathname === p || (p !== "/" && pathname.startsWith(p + "/")));
   if (!isAuthenticated && !isPublicPage) {
     return (
       <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center">

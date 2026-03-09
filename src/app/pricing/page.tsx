@@ -1,7 +1,8 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import NavbarDemo from "@/components/Navbar";
 import ScrollProgress from "@/components/ui/scroll-progress";
 import Footer from "@/components/sections/Footer";
@@ -433,13 +434,20 @@ export default function PricingPage() {
     planName: string;
     includeCRM: boolean;
   }>({ isOpen: false, planName: "", includeCRM: false });
+  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setPortalRoot(document.body);
+  }, []);
 
   const openReviewModal = (planName: string, includeCRM: boolean) => {
     setReviewModal({ isOpen: true, planName, includeCRM });
+    document.body.style.overflow = "hidden";
   };
 
   const closeReviewModal = () => {
     setReviewModal({ isOpen: false, planName: "", includeCRM: false });
+    document.body.style.overflow = "";
   };
 
   const getReviewPlan = () => {
@@ -452,6 +460,19 @@ export default function PricingPage() {
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Reset loading state when user navigates back (bfcache restore)
+  useEffect(() => {
+    const handlePageShow = (e: PageTransitionEvent) => {
+      if (e.persisted) {
+        setIsCheckoutLoading(null);
+        closeReviewModal();
+      }
+    };
+    window.addEventListener("pageshow", handlePageShow);
+    return () => window.removeEventListener("pageshow", handlePageShow);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const currentPlans = planType === "solo" ? soloPlans : teamPlans;
@@ -647,6 +668,7 @@ export default function PricingPage() {
                 src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800"
                 alt="Strategic Planning"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover grayscale"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#161616] via-transparent to-transparent" />
@@ -713,6 +735,7 @@ export default function PricingPage() {
                   src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800"
                   alt="Team collaboration"
                   fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover grayscale"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#161616] via-transparent to-transparent" />
@@ -1325,144 +1348,149 @@ export default function PricingPage() {
         </section>
       </main>
 
-      {/* Order Review Modal */}
-      <AnimatePresence>
-        {reviewModal.isOpen && (() => {
-          const plan = getReviewPlan();
-          if (!plan) return null;
-          const planPrice = getPlanPrice(plan.name.toLowerCase(), false);
-          const totalPrice = reviewModal.includeCRM ? planPrice + CRM_ADDON_PRICE : planPrice;
-          const isLoading = isCheckoutLoading !== null;
+      {/* Order Review Modal - rendered via portal to avoid CSS containment issues */}
+      {portalRoot && createPortal(
+        <AnimatePresence>
+          {reviewModal.isOpen && (() => {
+            const plan = getReviewPlan();
+            if (!plan) return null;
+            const planPrice = getPlanPrice(plan.name.toLowerCase(), false);
+            const totalPrice = reviewModal.includeCRM ? planPrice + CRM_ADDON_PRICE : planPrice;
+            const isLoading = isCheckoutLoading !== null;
 
-          return (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
-              onClick={() => !isLoading && closeReviewModal()}
-            >
+            return (
               <motion.div
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                className="bg-[#161616] border border-white/10 rounded-2xl p-8 max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto"
-                onClick={(e) => e.stopPropagation()}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", padding: "1rem" }}
+                className="bg-black/70 backdrop-blur-sm"
+                onClick={() => !isLoading && closeReviewModal()}
               >
-                {/* Plan Header */}
-                <div className="flex items-center gap-3 mb-2">
-                  <div className={`w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center ${plan.iconColor}`}>
-                    <plan.icon className="w-6 h-6" />
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="text-xl font-bold text-white">{plan.name} Plan</h3>
-                      {plan.tag && (
-                        <span className={`px-2 py-0.5 text-xs font-semibold rounded-full ${
-                          plan.tag === "Most Popular"
-                            ? "bg-[#d5b367]/20 text-[#d5b367]"
-                            : plan.tag === "Best Results" || plan.tag === "Best Value"
-                            ? "bg-emerald-500/20 text-emerald-400"
-                            : "bg-blue-500/20 text-blue-400"
-                        }`}>
-                          {plan.tag}
-                        </span>
-                      )}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                  transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                  className="bg-[#161616] border border-white/10 rounded-2xl p-4 sm:p-8 max-w-md w-full shadow-2xl overflow-y-auto"
+                  style={{ maxHeight: "calc(100dvh - 2rem)" }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Plan Header */}
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className={`w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center ${plan.iconColor}`}>
+                      <plan.icon className="w-6 h-6" />
                     </div>
-                    <p className="text-white/50 text-sm">{plan.tagline}</p>
-                  </div>
-                </div>
-
-                {/* Best For */}
-                <p className="text-white/40 text-xs mb-6 pl-[60px]">Best for: {plan.bestFor}</p>
-
-                {/* Price Breakdown */}
-                <div className="bg-white/5 rounded-xl p-5 mb-6 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-white/70">{plan.name} Plan</span>
-                    <div className="flex items-center gap-2">
-                      {plan.originalPrice && (
-                        <span className="text-white/30 text-sm line-through">{plan.originalPrice}</span>
-                      )}
-                      <span className="text-white font-medium">{formatPrice(planPrice)}</span>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h3 className="text-xl font-bold text-white">{plan.name} Plan</h3>
+                        {plan.tag && (
+                          <span className={`px-2 py-0.5 text-xs font-semibold rounded-full ${
+                            plan.tag === "Most Popular"
+                              ? "bg-[#d5b367]/20 text-[#d5b367]"
+                              : plan.tag === "Best Results" || plan.tag === "Best Value"
+                              ? "bg-emerald-500/20 text-emerald-400"
+                              : "bg-blue-500/20 text-blue-400"
+                          }`}>
+                            {plan.tag}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-white/50 text-sm">{plan.tagline}</p>
                     </div>
                   </div>
-                  {reviewModal.includeCRM && (
+
+                  {/* Best For */}
+                  <p className="text-white/40 text-xs mb-3 sm:mb-6 pl-[60px]">Best for: {plan.bestFor}</p>
+
+                  {/* Price Breakdown */}
+                  <div className="bg-white/5 rounded-xl p-4 sm:p-5 mb-4 sm:mb-6 space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-white/70">CRM Add-on (GoHighLevel)</span>
+                      <span className="text-white/70">{plan.name} Plan</span>
                       <div className="flex items-center gap-2">
-                        <span className="text-white/30 text-sm line-through">$197</span>
-                        <span className="text-white font-medium">{formatPrice(CRM_ADDON_PRICE)}</span>
+                        {plan.originalPrice && (
+                          <span className="text-white/30 text-sm line-through">{plan.originalPrice}</span>
+                        )}
+                        <span className="text-white font-medium">{formatPrice(planPrice)}</span>
                       </div>
                     </div>
-                  )}
-                  <div className="border-t border-white/10 pt-3 flex items-center justify-between">
-                    <span className="text-white font-semibold">Total</span>
-                    <span className="text-[#d5b367] text-xl font-bold">{formatPrice(totalPrice)}</span>
-                  </div>
-                  <p className="text-white/40 text-xs">One-time payment &bull; No recurring fees</p>
-                </div>
-
-                {/* All Features */}
-                <div className="mb-6">
-                  <p className="text-sm font-medium text-white/70 mb-3">What&apos;s Included:</p>
-                  <ul className="space-y-2 max-h-[200px] overflow-y-auto pr-1">
-                    {plan.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-sm text-white/60">
-                        <IconCheck className={`w-4 h-4 flex-shrink-0 ${feature.includes("FREE CRM") ? "text-emerald-400" : "text-[#d5b367]"}`} />
-                        <span className={feature.includes("FREE CRM") ? "text-emerald-400 font-medium" : ""}>{feature}</span>
-                      </li>
-                    ))}
                     {reviewModal.includeCRM && (
-                      <li className="flex items-center gap-2 text-sm text-emerald-400 font-medium">
-                        <IconCheck className="w-4 h-4 flex-shrink-0 text-emerald-400" />
-                        CRM Add-on (GoHighLevel)
-                      </li>
+                      <div className="flex items-center justify-between">
+                        <span className="text-white/70">CRM Add-on (GoHighLevel)</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-white/30 text-sm line-through">$197</span>
+                          <span className="text-white font-medium">{formatPrice(CRM_ADDON_PRICE)}</span>
+                        </div>
+                      </div>
                     )}
-                  </ul>
-                </div>
+                    <div className="border-t border-white/10 pt-3 flex items-center justify-between">
+                      <span className="text-white font-semibold">Total</span>
+                      <span className="text-[#d5b367] text-xl font-bold">{formatPrice(totalPrice)}</span>
+                    </div>
+                    <p className="text-white/40 text-xs">One-time payment &bull; No recurring fees</p>
+                  </div>
 
-                {/* Actions */}
-                <div className="space-y-3">
-                  <button
-                    onClick={() => {
-                      handleCheckout(reviewModal.planName, reviewModal.includeCRM);
-                    }}
-                    disabled={isLoading}
-                    className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-[#d5b367] text-[#161616] rounded-full font-semibold hover:bg-[#c9a555] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
-                  >
-                    {isLoading ? (
-                      <>
-                        <IconLoader2 className="w-4 h-4 animate-spin" />
-                        Redirecting to payment...
-                      </>
-                    ) : (
-                      <>
-                        <IconCreditCard className="w-4 h-4" />
-                        Proceed to Payment
-                      </>
-                    )}
-                  </button>
-                  {!isLoading && (
+                  {/* All Features */}
+                  <div className="mb-4 sm:mb-6">
+                    <p className="text-sm font-medium text-white/70 mb-3">What&apos;s Included:</p>
+                    <ul className="space-y-2 max-h-[150px] sm:max-h-[200px] overflow-y-auto pr-1">
+                      {plan.features.map((feature, idx) => (
+                        <li key={idx} className="flex items-center gap-2 text-sm text-white/60">
+                          <IconCheck className={`w-4 h-4 flex-shrink-0 ${feature.includes("FREE CRM") ? "text-emerald-400" : "text-[#d5b367]"}`} />
+                          <span className={feature.includes("FREE CRM") ? "text-emerald-400 font-medium" : ""}>{feature}</span>
+                        </li>
+                      ))}
+                      {reviewModal.includeCRM && (
+                        <li className="flex items-center gap-2 text-sm text-emerald-400 font-medium">
+                          <IconCheck className="w-4 h-4 flex-shrink-0 text-emerald-400" />
+                          CRM Add-on (GoHighLevel)
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="space-y-3">
                     <button
-                      onClick={closeReviewModal}
-                      className="w-full px-6 py-3 text-white/50 hover:text-white/80 text-sm transition-colors"
+                      onClick={() => {
+                        handleCheckout(reviewModal.planName, reviewModal.includeCRM);
+                      }}
+                      disabled={isLoading}
+                      className="w-full flex items-center justify-center gap-2 px-6 py-3.5 bg-[#d5b367] text-[#161616] rounded-full font-semibold hover:bg-[#c9a555] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
                     >
-                      Cancel
+                      {isLoading ? (
+                        <>
+                          <IconLoader2 className="w-4 h-4 animate-spin" />
+                          Redirecting to payment...
+                        </>
+                      ) : (
+                        <>
+                          <IconCreditCard className="w-4 h-4" />
+                          Proceed to Payment
+                        </>
+                      )}
                     </button>
-                  )}
-                </div>
+                    {!isLoading && (
+                      <button
+                        onClick={closeReviewModal}
+                        className="w-full px-6 py-3 text-white/50 hover:text-white/80 text-sm transition-colors"
+                      >
+                        Cancel
+                      </button>
+                    )}
+                  </div>
 
-                <p className="text-center text-white/30 text-xs mt-4">
-                  <IconShieldCheck className="w-3 h-3 inline mr-1" />
-                  You&apos;ll be redirected to Square for secure payment
-                </p>
+                  <p className="text-center text-white/30 text-xs mt-4">
+                    <IconShieldCheck className="w-3 h-3 inline mr-1" />
+                    You&apos;ll be redirected to Square for secure payment
+                  </p>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          );
-        })()}
-      </AnimatePresence>
+            );
+          })()}
+        </AnimatePresence>,
+        portalRoot
+      )}
 
       <Footer />
     </div>

@@ -49,3 +49,29 @@ body {
 }
 
 .animate-marquee { animation: marquee 20s linear infinite; }
+
+/* Custom scrollbar - dark/gold theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d5b367;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c9a555;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #d5b367 #1a1a1a;
+}

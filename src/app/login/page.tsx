@@ -35,7 +35,7 @@ export default function LoginPage() {
     if (username === VALID_USERNAME && password === VALID_PASSWORD) {
       // Set session storage to indicate logged in (clears when tab is closed)
       sessionStorage.setItem("isAuthenticated", "true");
-      // Use window.location for full page reload to ensure AuthProvider re-checks auth status
+      // Full page reload so AuthProvider re-reads sessionStorage on mount
       window.location.href = "/";
     } else {
       setError("Invalid username or password");
