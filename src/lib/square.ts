@@ -21,7 +21,7 @@ const getSquareClient = (): SquareClient => {
 
 // Get the base URL for redirects (strip trailing slash for safety)
 const getBaseUrl = (): string => {
-  const url = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const url = process.env.NEXT_PUBLIC_SITE_URL || "https://marketlyn.com";
   return url.replace(/\/+$/, "");
 };
 
