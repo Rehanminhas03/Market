@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
             </p>
 
             <div style="text-align: center; margin-top: 30px;">
-              <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://marketlyn.com"}"
+              <a href="${process.env.NEXT_PUBLIC_SITE_URL || "https://re.marketlyn.com"}"
                  style="display: inline-block; background: linear-gradient(135deg, #d5b367, #c9a555); color: #161616; padding: 12px 30px; text-decoration: none; border-radius: 25px; font-weight: bold;">
                 Visit Our Website
               </a>

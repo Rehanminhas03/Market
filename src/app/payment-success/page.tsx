@@ -39,10 +39,13 @@ function PaymentSuccessContent() {
     };
 
     const verifyPayment = async () => {
+      // Log received params for diagnostics
+      console.log("[PaymentSuccess] Received params:", { orderId, transactionId, allParams: searchParams.toString() });
+
       // Need at least orderId to verify
       if (!orderId) {
         setStatus("error");
-        setErrorMessage("Missing payment information. Please try again.");
+        setErrorMessage("We couldn't find your payment details in the redirect URL. This can happen if you were redirected from an older payment link. Please contact support at support@marketlyn.com with your payment confirmation email, and we'll get you set up right away.");
         return;
       }
 

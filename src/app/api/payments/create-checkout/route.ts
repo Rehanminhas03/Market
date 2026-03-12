@@ -37,6 +37,8 @@ export async function POST(request: NextRequest) {
       Boolean(includeCRM)
     );
 
+    console.log(`[Checkout] Plan: ${plan}, SiteURL: ${process.env.NEXT_PUBLIC_SITE_URL}, OrderId: ${orderId}`);
+
     return NextResponse.json({
       success: true,
       checkoutUrl,

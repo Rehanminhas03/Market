@@ -21,7 +21,10 @@ const getSquareClient = (): SquareClient => {
 
 // Get the base URL for redirects (strip trailing slash for safety)
 const getBaseUrl = (): string => {
-  const url = process.env.NEXT_PUBLIC_SITE_URL || "https://marketlyn.com";
+  const url = process.env.NEXT_PUBLIC_SITE_URL || "https://re.marketlyn.com";
+  if (!process.env.NEXT_PUBLIC_SITE_URL) {
+    console.warn("[Square] WARNING: NEXT_PUBLIC_SITE_URL is not set, using fallback: https://re.marketlyn.com");
+  }
   return url.replace(/\/+$/, "");
 };
 
@@ -48,6 +51,8 @@ export const createCheckoutLink = async (
   }
 
   const baseUrl = getBaseUrl();
+  const redirectUrl = `${baseUrl}/payment-success`;
+  console.log(`[Square] Creating checkout link with redirectUrl: ${redirectUrl}`);
   const planPrice = getPlanPrice(plan, false);
   const planName = getPlanDisplayName(plan);
 
@@ -90,7 +95,7 @@ export const createCheckoutLink = async (
       },
     },
     checkoutOptions: {
-      redirectUrl: `${baseUrl}/payment-success`,
+      redirectUrl,
       askForShippingAddress: false,
     },
     prePopulatedData: {
